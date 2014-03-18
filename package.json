@@ -9,10 +9,11 @@
         "url": "git://github.com/coderaiser/util-pipe.git"
     },
     "dependencies": {
+        "util.io": "0.8.0"
     },
     "license": "MIT",
     "engines": {
         "node": ">=0.4.x"
     },
-    "main": "./lib/util.js"
+    "main": "./lib/pipe.js"
 }
