@@ -1,0 +1,18 @@
+{
+    "name": "util-pipe",
+    "version": "0.8.2",
+    "author": "coderaiser <mnemonic.enemy@gmail.com> (https://github.com/coderaiser)",
+    "description": "Pipe streams and handle events",
+    "homepage": "http://github.com/coderaiser/util-pipe",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/coderaiser/util-pipe.git"
+    },
+    "dependencies": {
+    },
+    "license": "MIT",
+    "engines": {
+        "node": ">=0.4.x"
+    },
+    "main": "./lib/util.js"
+}
