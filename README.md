@@ -6,17 +6,16 @@ Easy way to create pipe which would handle all error events and redirect tham to
 ```js
     var pipe        = require('util-pipe'),
         NameFrom    = 'README.md',
-        NameTo      = 'README_COPY.gz';
+        NameTo      = 'README_COPY.gz',
+        
+        options     = {
+            gzip: true
+        };
     
-    pipe.create({
-        from        : NameFrom,
-        to          : NameTo,
-        gzip        : true,
-        callback    : function(error) {
-            var msg = 'done';
-            
-            console.log(error || msg);
-        }
+    pipe.create(NameFrom, NameTo, options, function(error) {
+        var msg = 'done';
+        
+        console.log(error || msg);
     });
 ```
 

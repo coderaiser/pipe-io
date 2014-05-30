@@ -1,6 +1,6 @@
 {
     "name": "pipe-io",
-    "version": "0.9.0",
+    "version": "0.9.1",
     "author": "coderaiser <mnemonic.enemy@gmail.com> (https://github.com/coderaiser)",
     "description": "Pipe streams and handle events",
     "homepage": "http://github.com/coderaiser/util-pipe",
@@ -9,7 +9,7 @@
         "url": "git://github.com/coderaiser/util-pipe.git"
     },
     "dependencies": {
-        "util.io": "1.1.x"
+        "util-io": "1.1.x"
     },
     "license": "MIT",
     "engines": {

@@ -12,13 +12,12 @@ var pipe        = require('..'),
     ]);
     
     function pipeFile(callback) {
-        pipe.create({
-            from        : NameFrom,
-            to          : NameTo,
-            gzip        : true,
-            callback    : function(error) {
-                throwIfError(error, callback);
-            }
+        var options = {
+            gzip    : true
+        };
+        
+        pipe.create(NameFrom, NameTo, options,  function(error) {
+            throwIfError(error, callback);
         });
     }
     
