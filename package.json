@@ -3,10 +3,10 @@
     "version": "0.9.1",
     "author": "coderaiser <mnemonic.enemy@gmail.com> (https://github.com/coderaiser)",
     "description": "Pipe streams and handle events",
-    "homepage": "http://github.com/coderaiser/util-pipe",
+    "homepage": "http://github.com/coderaiser/pipe-io",
     "repository": {
         "type": "git",
-        "url": "git://github.com/coderaiser/util-pipe.git"
+        "url": "git://github.com/coderaiser/pipe-io.git"
     },
     "dependencies": {
         "util-io": "1.1.x"
