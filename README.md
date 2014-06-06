@@ -1,4 +1,4 @@
-Util Pipe
+Pipe-io
 =========
 ### create
 Easy way to create pipe which would handle all error events and redirect tham to callback.
