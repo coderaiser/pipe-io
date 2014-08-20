@@ -1,10 +1,18 @@
 Pipe-io
 =========
+Pipe streams and handle events
+
+## Install
+
+```
+npm i pipe-io
+```
+## API
 ### create
 Easy way to create pipe which would handle all error events and redirect tham to callback.
 
 ```js
-    var pipe        = require('util-pipe'),
+    var pipe        = require('pipe-io'),
         NameFrom    = 'README.md',
         NameTo      = 'README_COPY.gz',
         
@@ -23,7 +31,7 @@ Easy way to create pipe which would handle all error events and redirect tham to
 Get body of readStream
 
 ```js
-    var pipe        = require('util-pipe'),
+    var pipe        = require('pipe-io'),
         fs          = require('fs'),
         NAME        = 'README.md',
         readStream  = fs.createReadStream(NAME);
@@ -32,3 +40,6 @@ Get body of readStream
         console.log(error || data);
     });
 ```
+
+## License
+MIT
