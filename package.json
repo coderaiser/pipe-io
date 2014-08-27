@@ -1,6 +1,6 @@
 {
     "name": "pipe-io",
-    "version": "0.9.4",
+    "version": "0.9.5",
     "author": "coderaiser <mnemonic.enemy@gmail.com> (https://github.com/coderaiser)",
     "description": "Pipe streams and handle events",
     "homepage": "http://github.com/coderaiser/pipe-io",
