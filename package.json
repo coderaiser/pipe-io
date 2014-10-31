@@ -9,7 +9,7 @@
         "url": "git://github.com/coderaiser/pipe-io.git"
     },
     "dependencies": {
-        "util-io": "~1.4.0"
+        "util-io": "~1.5.0"
     },
     "license": "MIT",
     "engines": {
