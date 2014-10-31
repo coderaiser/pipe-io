@@ -20,7 +20,7 @@ Easy way to create pipe which would handle all error events and redirect tham to
             gzip: true
         };
     
-    pipe.create(NameFrom, NameTo, options, function(error) {
+    pipe(NameFrom, NameTo, options, function(error) {
         var msg = 'done';
         
         console.log(error || msg);
