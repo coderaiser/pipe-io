@@ -1,0 +1,6 @@
+2014.10.31, v1.0.0
+
+feature:
+- (pipe) pipe.create -> pipe
+- (package) util-io v1.5.0
+

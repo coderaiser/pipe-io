@@ -1,19 +1,19 @@
 {
-    "name": "pipe-io",
-    "version": "0.9.6",
-    "author": "coderaiser <mnemonic.enemy@gmail.com> (https://github.com/coderaiser)",
-    "description": "Pipe streams and handle events",
-    "homepage": "http://github.com/coderaiser/pipe-io",
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/coderaiser/pipe-io.git"
-    },
-    "dependencies": {
-        "util-io": "~1.5.0"
-    },
-    "license": "MIT",
-    "engines": {
-        "node": ">=0.4.x"
-    },
-    "main": "./lib/pipe.js"
+  "name": "pipe-io",
+  "version": "1.0.0",
+  "author": "coderaiser <mnemonic.enemy@gmail.com> (https://github.com/coderaiser)",
+  "description": "Pipe streams and handle events",
+  "homepage": "http://github.com/coderaiser/pipe-io",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/coderaiser/pipe-io.git"
+  },
+  "dependencies": {
+    "util-io": "~1.5.0"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.4.x"
+  },
+  "main": "./lib/pipe.js"
 }
