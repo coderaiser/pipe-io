@@ -1,29 +1,29 @@
 Pipe-io
 =========
-Pipe streams and handle events
+Pipe streams and handle events.
 
 ## Install
 
 ```
-npm i pipe-io
+npm i pipe-io --save
 ```
+
 ## API
-### create
-Easy way to create pipe which would handle all error events and redirect tham to callback.
+
+### pipe
+Create pipe between streams and add on callback wich would 
+handle any error or will be called when everything done.
 
 ```js
     var pipe        = require('pipe-io'),
-        NameFrom    = 'README.md',
-        NameTo      = 'README_COPY.gz',
-        
-        options     = {
-            gzip: true
-        };
+        fs          = require('fs'),
+        NAME        = 'README.md',
+        NAME2       = 'README2.md',
+        readStream  = fs.createReadStream(NAME),
+        writeStream = fs.createWritesStream(NAME2);
     
-    pipe(NameFrom, NameTo, options, function(error) {
-        var msg = 'done';
-        
-        console.log(error || msg);
+    pipe([readStream, writeStream], function(error) {
+        console.log(error || 'done');
     });
 ```
 
