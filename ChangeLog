@@ -1,3 +1,10 @@
+2014.12.01, v1.1.3
+
+feature:
+- (pipe) on -> once
+- (pipe) rm duplicate listener
+
+
 2014.11.25, v1.1.2
 
 feature:
