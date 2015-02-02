@@ -1,3 +1,9 @@
+2015.02.02, v1.1.7
+
+feature:
+- (pipe) checkup -> assert
+
+
 2015.01.16, v1.1.6
 
 fix:
