@@ -9,7 +9,6 @@
     "url": "git://github.com/coderaiser/pipe-io.git"
   },
   "dependencies": {
-    "checkup": "~1.0.2",
     "execon": "~1.1.0"
   },
   "license": "MIT",
