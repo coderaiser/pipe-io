@@ -8,9 +8,7 @@
     "type": "git",
     "url": "git://github.com/coderaiser/pipe-io.git"
   },
-  "dependencies": {
-    "execon": "~1.1.0"
-  },
+  "dependencies": {},
   "license": "MIT",
   "engines": {
     "node": ">=0.8"
