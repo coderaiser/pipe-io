@@ -1,3 +1,9 @@
+2015.02.15, v1.1.14
+
+feature:
+- (pipe) getBody: rmListeners
+
+
 2015.02.15, v1.1.13
 
 feature:
