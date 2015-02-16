@@ -1,3 +1,9 @@
+2015.02.16, v1.1.16
+
+feature:
+- (pipe) call callback only on end
+
+
 2015.02.16, v1.1.15
 
 fix:
