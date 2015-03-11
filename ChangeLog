@@ -1,3 +1,9 @@
+2015.03.11, v1.1.20
+
+fix:
+- (pipe) rm read.pause, read.resume
+
+
 2015.03.11, v1.1.19
 
 fix:
