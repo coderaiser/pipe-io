@@ -1,3 +1,9 @@
+2015.03.27, v1.1.22
+
+fix:
+- (pipe) end && finish -> end || finish
+
+
 2015.03.27, v1.1.21
 
 feature:
