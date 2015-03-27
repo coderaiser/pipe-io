@@ -1,3 +1,9 @@
+2015.03.27, v1.1.21
+
+feature:
+- (pipe) improve error handling
+
+
 2015.03.11, v1.1.20
 
 fix:
