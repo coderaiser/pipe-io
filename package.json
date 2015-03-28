@@ -4,6 +4,10 @@
   "author": "coderaiser <mnemonic.enemy@gmail.com> (https://github.com/coderaiser)",
   "description": "Pipe streams and handle events",
   "homepage": "http://github.com/coderaiser/pipe-io",
+  "keywords": [
+    "pipe",
+    "stream"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/coderaiser/pipe-io.git"
