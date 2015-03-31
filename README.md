@@ -11,8 +11,8 @@ npm i pipe-io --save
 ## API
 
 ### pipe
-Create pipe between streams and add on callback wich would 
-handle any error or will be called when everything done.
+Create pipe between streams and adds callback wich would 
+be called once whenever everything is done, or error occures.
 
 ```js
     var pipe        = require('pipe-io'),
