@@ -1,6 +1,6 @@
 Pipe-io
 =========
-Pipe streams and handle events.
+Pipe [streams](https://github.com/substack/stream-handbook) and handle events.
 
 ## Install
 
