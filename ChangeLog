@@ -1,3 +1,9 @@
+2015.04.20, v1.1.27
+
+fix:
+- (pipe) crash when try to overwrite folder
+
+
 2015.04.20, v1.1.26
 
 feature:
