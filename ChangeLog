@@ -1,3 +1,12 @@
+2015.04.20, v1.1.25
+
+fix:
+- (pipe) readError does not handle after writeError
+
+feature:
+- (npmignore) rm
+
+
 2015.03.28, v1.1.24
 
 fix:
