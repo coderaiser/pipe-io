@@ -68,13 +68,21 @@
         });
     });
     
-    test('file1 | file2: error EISDIR', function(t) {
+    test('file1 | file2: error read EISDIR', function(t) {
         var tmp         = os.tmpdir(),
             name        = path.basename(__filename),
             nameTmp     = path.join(tmp, name + random);
         
         tryPipe('/', nameTmp, function(error) {
-            t.equal(error.code, 'EISDIR');
+            fs.unlinkSync(nameTmp);
+            t.equal(error.code, 'EISDIR', 'EISDIR: read error');
+            t.end();
+        });
+    });
+    
+    test('file1 | file2: error write EISDIR', function(t) {
+        tryPipe(__filename, '/', function(error) {
+            t.equal(error.code, 'EISDIR', 'EISDIR: write error');
             t.end();
         });
     });
