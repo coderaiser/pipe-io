@@ -1,3 +1,9 @@
+2015.04.22, v1.1.32
+
+fix:
+- (pipe) assert: options -> callback
+
+
 2015.04.22, v1.1.31
 
 fix:
