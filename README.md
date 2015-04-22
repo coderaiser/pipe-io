@@ -1,4 +1,4 @@
-Pipe-io
+Pipe-io [![License][LicenseIMGURL]][LicenseURL] [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
 =========
 Pipe [streams](https://github.com/substack/stream-handbook) and handle events.
 
@@ -43,3 +43,13 @@ pipe.getBody(readStream, function(error, data) {
 
 ## License
 MIT
+
+[NPMIMGURL]:                https://img.shields.io/npm/v/pipe-io.svg?style=flat
+[BuildStatusIMGURL]:        https://img.shields.io/travis/coderaiser/pipe-io/master.svg?style=flat
+[DependencyStatusIMGURL]:   https://img.shields.io/gemnasium/coderaiser/pipe-io.svg?style=flat
+[LicenseIMGURL]:            https://img.shields.io/badge/license-MIT-317BF9.svg?style=flat
+[NPMURL]:                   https://npmjs.org/package/pipe-io "npm"
+[BuildStatusURL]:           https://travis-ci.org/coderaiser/rendy  "Build Status"
+[DependencyStatusURL]:      https://gemnasium.com/coderaiser/rendy "Dependency Status"
+[LicenseURL]:               https://tldrlegal.com/license/mit-license "MIT License"
+
