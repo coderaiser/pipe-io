@@ -59,14 +59,25 @@
             write       = fs.createWriteStream(nameTmp),
             zip         = zlib.createGzip();
         
-        pipe([read, zip, write], function() {
+        pipe([read, zip, write], function(error) {
             var file1   = fs.readFileSync(__filename, 'utf8'),
                 file2   = fs.readFileSync(nameTmp),
                 zip     = zlib.gzipSync(file1);
             
             fs.unlinkSync(nameTmp);
             
+            t.notOk(error, 'no errors');
             t.deepEqual(zip, file2, 'file gziped');
+            t.end();
+        });
+    });
+    
+      test('file1 | gzip', function(t) {
+        var read        = fs.createReadStream(__filename),
+            zip         = zlib.createGzip();
+        
+        pipe([read, zip], function(error) {
+            t.notOk(error, 'no errors');
             t.end();
         });
     });
