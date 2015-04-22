@@ -49,7 +49,7 @@ MIT
 [DependencyStatusIMGURL]:   https://img.shields.io/gemnasium/coderaiser/pipe-io.svg?style=flat
 [LicenseIMGURL]:            https://img.shields.io/badge/license-MIT-317BF9.svg?style=flat
 [NPMURL]:                   https://npmjs.org/package/pipe-io "npm"
-[BuildStatusURL]:           https://travis-ci.org/coderaiser/rendy  "Build Status"
-[DependencyStatusURL]:      https://gemnasium.com/coderaiser/rendy "Dependency Status"
+[BuildStatusURL]:           https://travis-ci.org/coderaiser/pipe-io  "Build Status"
+[DependencyStatusURL]:      https://gemnasium.com/coderaiser/pipe-io "Dependency Status"
 [LicenseURL]:               https://tldrlegal.com/license/mit-license "MIT License"
 
