@@ -7,12 +7,14 @@
         zlib    = require('zlib'),
         
         pipe    = require('..'),
-        test    = require('tape');
+        test    = require('tape'),
+        
+        random  = Math.random();
     
     test('file1 | file2: no error', function(t) {
         var tmp     = os.tmpdir(),
             name    = path.basename(__filename),
-            nameTmp = path.join(tmp, name + Math.random());
+            nameTmp = path.join(tmp, name + random);
          
          tryPipe(__filename, nameTmp, function() {
             var file1 = fs.readFileSync(__filename, 'utf8'),
@@ -27,7 +29,7 @@
     
     test('file1 | file2: write open EACESS', function(t) {
         var name    = path.basename(__filename),
-            nameTmp = '/' + name + Math.random();
+            nameTmp = '/' + name + random;
         
         tryPipe(__filename, nameTmp, function(error) {
             t.ok(error, error && error.message);
@@ -38,7 +40,6 @@
     
     test('file1 | file2: read open ENOENT', function(t) {
         var tmp     = os.tmpdir(),
-            random  = Math.random(),
             name    = path.basename(__filename),
             nameTmp = path.join(tmp, name + random);
         
@@ -51,7 +52,6 @@
     
     test('file1 | gzip | file2: no errors', function(t) {
         var tmp         = os.tmpdir(),
-            random      = Math.random(),
             name        = path.basename(__filename),
             nameTmp     = path.join(tmp, name + random),
             
@@ -78,6 +78,16 @@
         
         pipe([read, zip], function(error) {
             t.notOk(error, 'no errors');
+            t.end();
+        });
+    });
+    
+    test('file1 | gzip: error ENOENT', function(t) {
+        var read        = fs.createReadStream(__filename + random),
+            zip         = zlib.createGzip();
+        
+        pipe([read, zip], function(error) {
+            t.ok(error, error.message);
             t.end();
         });
     });
