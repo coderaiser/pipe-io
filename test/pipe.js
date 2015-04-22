@@ -11,6 +11,12 @@
         
         random  = Math.random();
     
+    test('check parameters', function(t) {
+        t.throws(pipe, /streams could not be empty!/, 'check streams');
+        t.throws(pipe.bind(null, []), /callback could not be empty!/, 'check callback');
+        t.end();
+    });
+    
     test('file1 | file2: no error', function(t) {
         var tmp     = os.tmpdir(),
             name    = path.basename(__filename),
