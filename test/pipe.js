@@ -68,6 +68,17 @@
         });
     });
     
+    test('file1 | file2: error EISDIR', function(t) {
+        var tmp         = os.tmpdir(),
+            name        = path.basename(__filename),
+            nameTmp     = path.join(tmp, name + random);
+        
+        tryPipe('/', nameTmp, function(error) {
+            t.equal(error.code, 'EISDIR');
+            t.end();
+        });
+    });
+    
     test('file1 | gzip | file2: no errors', function(t) {
         var tmp         = os.tmpdir(),
             name        = path.basename(__filename),
