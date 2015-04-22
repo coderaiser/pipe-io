@@ -24,13 +24,25 @@
          });
     });
     
-    test('file1 | file2: read open EACESS', function(t) {
+    test('file1 | file2: write open EACESS', function(t) {
         var name    = path.basename(__filename),
             nameTmp = '/' + name + Math.random();
         
         tryPipe(__filename, nameTmp, function(error) {
-            if (error)
-                t.ok(error, error && error.message);
+            t.ok(error, error && error.message);
+            
+            t.end();
+        });
+    });
+    
+    test('file1 | file2: read open ENOENT', function(t) {
+        var tmp     = os.tmpdir(),
+            random  = Math.random(),
+            name    = path.basename(__filename),
+            nameTmp = path.join(tmp, name + random);
+        
+        tryPipe(__filename + random, nameTmp, function(error) {
+            t.ok(error, error && error.message);
             
             t.end();
         });
