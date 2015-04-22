@@ -92,6 +92,16 @@
         });
     });
     
+    test('file1 | gzip: error EISDIR', function(t) {
+        var read        = fs.createReadStream('/'),
+            zip         = zlib.createGzip();
+        
+        pipe([read, zip], function(error) {
+            t.ok(error, error.message);
+            t.end();
+        });
+    });
+    
     function tryPipe(from, to, fn) {
         var read    = fs.createReadStream(from),
             write   = fs.createWriteStream(to);
