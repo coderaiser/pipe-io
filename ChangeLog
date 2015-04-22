@@ -1,3 +1,9 @@
+2015.04.22, v1.1.33
+
+fix:
+- (pipe) on callback when readStream is directory
+
+
 2015.04.22, v1.1.32
 
 fix:
