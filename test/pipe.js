@@ -72,7 +72,7 @@
         });
     });
     
-      test('file1 | gzip', function(t) {
+    test('file1 | gzip', function(t) {
         var read        = fs.createReadStream(__filename),
             zip         = zlib.createGzip();
         
