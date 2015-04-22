@@ -1,6 +1,6 @@
 {
   "name": "pipe-io",
-  "version": "1.1.30",
+  "version": "1.1.31",
   "author": "coderaiser <mnemonic.enemy@gmail.com> (https://github.com/coderaiser)",
   "description": "Pipe streams and handle events",
   "homepage": "http://github.com/coderaiser/pipe-io",
@@ -13,7 +13,7 @@
     "url": "git://github.com/coderaiser/pipe-io.git"
   },
   "scripts": {
-      "test": "tape test/*.js"
+    "test": "tape test/*.js"
   },
   "dependencies": {},
   "license": "MIT",

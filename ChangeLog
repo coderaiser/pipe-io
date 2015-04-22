@@ -1,3 +1,9 @@
+2015.04.22, v1.1.31
+
+fix:
+- (pipe) crash when read error
+
+
 2015.04.22, v1.1.30
 
 fix:
