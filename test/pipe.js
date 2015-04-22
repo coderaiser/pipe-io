@@ -17,6 +17,18 @@
         t.end();
     });
     
+    test('getBody', function(t) {
+        var read = fs.createReadStream(__filename);
+        
+        pipe.getBody(read, function(error, data) {
+            var file = fs.readFileSync(__filename, 'utf8');
+            
+            t.equal(data, file, 'getbody <-> readFile');
+            
+            t.end();
+        });
+    });
+    
     test('file1 | file2: no error', function(t) {
         var tmp     = os.tmpdir(),
             name    = path.basename(__filename),
