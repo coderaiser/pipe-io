@@ -12,10 +12,16 @@
     "type": "git",
     "url": "git://github.com/coderaiser/pipe-io.git"
   },
+  "scripts": {
+      "test": "tape test/*.js"
+  },
   "dependencies": {},
   "license": "MIT",
   "engines": {
     "node": ">=0.8"
   },
-  "main": "./lib/pipe.js"
+  "main": "./lib/pipe.js",
+  "devDependencies": {
+    "tape": "~4.0.0"
+  }
 }
