@@ -87,6 +87,13 @@
         });
     });
     
+    test('file1 | file2: error read/write EISDIR', function(t) {
+        tryPipe(__dirname, '/', function(error) {
+            t.equal(error.code, 'EISDIR', 'read/write EISDIR');
+            t.end();
+        });
+    });
+    
     test('file1 | gzip | file2: no errors', function(t) {
         var tmp         = os.tmpdir(),
             name        = path.basename(__filename),
