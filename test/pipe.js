@@ -151,8 +151,38 @@
             write   = fs.createWriteStream(to);
         
         pipe([read, write], function(error) {
+            var name = checkListenersLeak([read, write]);
+            
+            if (name)
+                console.error('possible memory leak: ', name);
+            
             fn(error);
         });
+    }
+    
+    function checkListenersLeak(streams) {
+        var name,
+            events  = ['open', 'error', 'end', 'finish'],
+            regExp  = /^function (onError|onReadError|onWriteError|onReadEnd|onWriteFinish)/;
+        
+        streams.some(function(stream) {
+            events.some(function(event) {
+                stream.listeners(event).some(function(fn) {
+                    var is = (fn + '').match(regExp);
+                    
+                    if (is)
+                        name = is[1];
+                    
+                    return name;
+                });
+                
+                return name;
+            });
+            
+            return name;
+        });
+        
+        return name;
     }
     
 })();
