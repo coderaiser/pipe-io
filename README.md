@@ -20,7 +20,7 @@ var pipe        = require('pipe-io'),
     NAME        = 'README.md',
     NAME2       = 'README2.md',
     readStream  = fs.createReadStream(NAME),
-    writeStream = fs.createWritesStream(NAME2);
+    writeStream = fs.createWriteStream(NAME2);
 
 pipe([readStream, writeStream], function(error) {
     console.log(error || 'done');
