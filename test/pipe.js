@@ -147,6 +147,16 @@
         });
     });
     
+    test('file1 | gunzip: error header check', function(t) {
+        var read    = fs.createReadStream(__filename),
+            gunzip  = zlib.createGunzip();
+        
+        pipe([read, gunzip], function(error) {
+            t.ok(error, error.message);
+            t.end();
+        });
+    });
+    
     test('file1, file2 | response: end false', function(t) {
         var server = http.createServer(function (req, res) {
             var read1 = fs.createReadStream(__filename),
