@@ -22,6 +22,6 @@
   },
   "main": "./lib/pipe.js",
   "devDependencies": {
-    "tape": "~4.0.0"
+    "tape": "^4.2.0"
   }
 }
