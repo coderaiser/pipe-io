@@ -1,3 +1,10 @@
+2015.08.17, v1.2.0
+
+feature:
+- (pipe) add ability to handle pipe from file to gunzip
+- (package) tape v4.2.0
+
+
 2015.04.23, v1.1.36
 
 fix:
