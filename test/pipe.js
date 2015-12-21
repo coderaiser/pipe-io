@@ -30,6 +30,15 @@
         });
     });
     
+    test('getBody: error', function(t) {
+        var read = fs.createReadStream(String(Math.random()));
+        
+        pipe.getBody(read, function(error) {
+            t.ok(error, 'read error: ' + error.message); 
+            t.end();
+        });
+    });
+    
     test('file1 | file2: no error', function(t) {
         var tmp     = os.tmpdir(),
             name    = path.basename(__filename),
