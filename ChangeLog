@@ -1,3 +1,11 @@
+2015.12.21, v1.2.1
+
+feature:
+- (pipe) add coverals
+- (pipe) rm writeError && readError check
+- (pipe) add coverage
+
+
 2015.08.17, v1.2.0
 
 feature:
