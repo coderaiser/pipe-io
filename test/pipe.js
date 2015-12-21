@@ -193,6 +193,41 @@
         });
     });
     
+     test('file1, file2 | options: empty object', function(t) {
+        var server = http.createServer(function (req, res) {
+            var read1 = fs.createReadStream(__filename),
+                read2 = fs.createReadStream(__filename);
+            
+            pipe([read1, res], {}, function() {
+                pipe([read2, res], function() {
+                });
+            });
+        });
+        
+        server.listen(7331, '127.0.0.1', function() {
+            console.log('server: 127.0.0.1:7331');
+            
+            http.get('http://127.0.0.1:7331', function(res) {
+                console.log('request: http://127.0.0.1:7331');
+                
+                pipe.getBody(res, function(error, data) {
+                    var file = fs.readFileSync(__filename, 'utf8');
+                    t.equal(data, file, 'reponse == file1 + file2');
+                    t.end();
+                    server.close();
+                });
+            }).on('error', function(error) {
+                t.ok(error, error.message);
+                t.end();
+            });
+        });
+        
+        server.on('error', function(error) {
+            t.ok(error, error.message);
+            t.end();
+        });
+     });
+    
     function tryPipe(from, to, fn) {
         var read    = fs.createReadStream(from),
             write   = fs.createWriteStream(to);
