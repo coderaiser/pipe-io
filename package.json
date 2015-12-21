@@ -13,7 +13,8 @@
     "url": "git://github.com/coderaiser/pipe-io.git"
   },
   "scripts": {
-    "test": "tape test/*.js"
+    "test": "tape test/*.js",
+    "coverage": "nyc npm test"
   },
   "dependencies": {},
   "license": "MIT",
@@ -22,6 +23,7 @@
   },
   "main": "./lib/pipe.js",
   "devDependencies": {
+    "nyc": "^5.0.1",
     "tape": "^4.2.0"
   }
 }
