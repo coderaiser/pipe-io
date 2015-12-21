@@ -14,7 +14,8 @@
   },
   "scripts": {
     "test": "tape test/*.js",
-    "coverage": "nyc npm test"
+    "coverage": "nyc npm test",
+    "report": "nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {},
   "license": "MIT",
@@ -23,6 +24,7 @@
   },
   "main": "./lib/pipe.js",
   "devDependencies": {
+    "coveralls": "^2.11.6",
     "nyc": "^5.0.1",
     "tape": "^4.2.0"
   }

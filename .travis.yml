@@ -8,7 +8,7 @@ matrix:
     - node_js: 'iojs'
 
 script:
-  - npm run coverage
+  - npm run coverage && npm run report
 
 notifications:
     email:
