@@ -6,6 +6,8 @@ const http    = require('http');
 const os      = require('os');
 const zlib    = require('zlib');
 
+const tar = require('tar-fs');
+
 const pipe    = require('..');
 const test    = require('tape');
 
@@ -165,6 +167,17 @@ test('file1 | gunzip: error header check', function(t) {
     });
 });
 
+test('file1 | gunzip | untar: error header check', function(t) {
+    const read = fs.createReadStream(__filename);
+    const gunzip = zlib.createGunzip();
+    const tarStream = tar.extract(__dirname);
+    
+    pipe([read, gunzip, tarStream], function(error) {
+        t.ok(error, error.message);
+        t.end();
+    });
+});
+
 test('file1, file2 | response: end false', function(t) {
     const server = http.createServer(function (req, res) {
         const read1 = fs.createReadStream(__filename),
@@ -237,10 +250,10 @@ test('file1, file2 | options: empty object', function(t) {
 });
 
 function tryPipe(from, to, fn) {
-    const read    = fs.createReadStream(from),
-        write   = fs.createWriteStream(to);
+    const read = fs.createReadStream(from);
+    const write = fs.createWriteStream(to);
     
-    pipe([read, write], function(error) {
+    pipe([read, write], (error) => {
         const name = checkListenersLeak([read, write]);
         
         if (name)
