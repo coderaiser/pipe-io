@@ -13,6 +13,9 @@
     "url": "git://github.com/coderaiser/pipe-io.git"
   },
   "scripts": {
+    "lint": "redrun lint:*",
+    "lint:lib": "eslint lib",
+    "lint:test": "eslint --rule 'no-console:0' test",
     "test": "tape test/*.js",
     "watch:test": "nodemon -w lib -w test -x \"npm test\"",
     "coverage": "nyc npm test",
@@ -26,9 +29,11 @@
   "main": "./lib/pipe.js",
   "devDependencies": {
     "coveralls": "^2.11.6",
+    "eslint": "^3.8.1",
     "nodemon": "^1.11.0",
     "nyc": "^5.0.1",
     "pullout": "^1.0.0",
+    "redrun": "^5.9.2",
     "tape": "^4.2.0"
   }
 }

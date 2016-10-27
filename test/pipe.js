@@ -43,7 +43,7 @@ test('file1 | file2: no error', function(t) {
         name    = path.basename(__filename),
         nameTmp = path.join(tmp, name + random);
      
-     tryPipe(__filename, nameTmp, function() {
+    tryPipe(__filename, nameTmp, function() {
         const file1 = fs.readFileSync(__filename, 'utf8'),
             file2 = fs.readFileSync(nameTmp, 'utf8');
             
@@ -51,7 +51,7 @@ test('file1 | file2: no error', function(t) {
         
         t.equal(file1, file2, 'files equal');
         t.end();
-     });
+    });
 });
 
 test('file1 | file2: write open EACESS', function(t) {
@@ -201,7 +201,7 @@ test('file1, file2 | response: end false', function(t) {
     });
 });
 
- test('file1, file2 | options: empty object', function(t) {
+test('file1, file2 | options: empty object', function(t) {
     const server = http.createServer(function (req, res) {
         const read1 = fs.createReadStream(__filename),
             read2 = fs.createReadStream(__filename);
@@ -234,7 +234,7 @@ test('file1, file2 | response: end false', function(t) {
         t.ok(error, error.message);
         t.end();
     });
- });
+});
 
 function tryPipe(from, to, fn) {
     const read    = fs.createReadStream(from),
