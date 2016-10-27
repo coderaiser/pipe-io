@@ -21,7 +21,9 @@
     "coverage": "nyc npm test",
     "report": "nyc report --reporter=text-lcov | coveralls"
   },
-  "dependencies": {},
+  "dependencies": {
+    "pullout": "^1.0.0"
+  },
   "license": "MIT",
   "engines": {
     "node": ">=0.8"
@@ -32,7 +34,6 @@
     "eslint": "^3.8.1",
     "nodemon": "^1.11.0",
     "nyc": "^8.3.2",
-    "pullout": "^1.0.0",
     "redrun": "^5.9.2",
     "tape": "^4.2.0"
   }
