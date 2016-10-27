@@ -1,3 +1,9 @@
+2016.10.27, v1.2.4
+
+fix:
+- (pipe) file1 | gunzip | untar
+
+
 2016.10.27, v1.2.3
 
 feature:
