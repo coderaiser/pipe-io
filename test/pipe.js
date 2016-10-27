@@ -1,15 +1,15 @@
 'use strict';
 
-var fs      = require('fs'),
-    path    = require('path'),
-    http    = require('http'),
-    os      = require('os'),
-    zlib    = require('zlib'),
-    
-    pipe    = require('..'),
-    test    = require('tape'),
-    
-    random  = Math.random();
+const fs      = require('fs');
+const path    = require('path');
+const http    = require('http');
+const os      = require('os');
+const zlib    = require('zlib');
+
+const pipe    = require('..');
+const test    = require('tape');
+
+const random  = Math.random();
 
 test('check parameters', function(t) {
     t.throws(pipe, /streams could not be empty!/, 'check streams');
@@ -18,10 +18,10 @@ test('check parameters', function(t) {
 });
 
 test('getBody', function(t) {
-    var read = fs.createReadStream(__filename);
+    const read = fs.createReadStream(__filename);
     
     pipe.getBody(read, function(error, data) {
-        var file = fs.readFileSync(__filename, 'utf8');
+        const file = fs.readFileSync(__filename, 'utf8');
         
         t.equal(data, file, 'getbody <-> readFile');
         
@@ -30,7 +30,7 @@ test('getBody', function(t) {
 });
 
 test('getBody: error', function(t) {
-    var read = fs.createReadStream(String(Math.random()));
+    const read = fs.createReadStream(String(Math.random()));
     
     pipe.getBody(read, function(error) {
         t.ok(error, 'read error: ' + error.message); 
@@ -39,12 +39,12 @@ test('getBody: error', function(t) {
 });
 
 test('file1 | file2: no error', function(t) {
-    var tmp     = os.tmpdir(),
+    const tmp     = os.tmpdir(),
         name    = path.basename(__filename),
         nameTmp = path.join(tmp, name + random);
      
      tryPipe(__filename, nameTmp, function() {
-        var file1 = fs.readFileSync(__filename, 'utf8'),
+        const file1 = fs.readFileSync(__filename, 'utf8'),
             file2 = fs.readFileSync(nameTmp, 'utf8');
             
         fs.unlinkSync(nameTmp);
@@ -55,7 +55,7 @@ test('file1 | file2: no error', function(t) {
 });
 
 test('file1 | file2: write open EACESS', function(t) {
-    var name    = path.basename(__filename),
+    const name    = path.basename(__filename),
         nameTmp = '/' + name + random;
     
     tryPipe(__filename, nameTmp, function(error) {
@@ -66,7 +66,7 @@ test('file1 | file2: write open EACESS', function(t) {
 });
 
 test('file1 | file2: read open ENOENT', function(t) {
-    var tmp     = os.tmpdir(),
+    const tmp     = os.tmpdir(),
         name    = path.basename(__filename),
         nameTmp = path.join(tmp, name + random);
     
@@ -78,7 +78,7 @@ test('file1 | file2: read open ENOENT', function(t) {
 });
 
 test('file1 | file2: error read EISDIR', function(t) {
-    var tmp         = os.tmpdir(),
+    const tmp         = os.tmpdir(),
         name        = path.basename(__filename),
         nameTmp     = path.join(tmp, name + random);
     
@@ -104,7 +104,7 @@ test('file1 | file2: error read/write EISDIR', function(t) {
 });
 
 test('file1 | gzip | file2: no errors', function(t) {
-    var tmp         = os.tmpdir(),
+    const tmp         = os.tmpdir(),
         name        = path.basename(__filename),
         nameTmp     = path.join(tmp, name + random),
         
@@ -113,7 +113,7 @@ test('file1 | gzip | file2: no errors', function(t) {
         zip         = zlib.createGzip();
     
     pipe([read, zip, write], function(error) {
-        var file1   = fs.readFileSync(__filename, 'utf8'),
+        const file1   = fs.readFileSync(__filename, 'utf8'),
             file2   = fs.readFileSync(nameTmp),
             zip     = zlib.gzipSync(file1);
         
@@ -126,7 +126,7 @@ test('file1 | gzip | file2: no errors', function(t) {
 });
 
 test('file1 | gzip', function(t) {
-    var read        = fs.createReadStream(__filename),
+    const read        = fs.createReadStream(__filename),
         zip         = zlib.createGzip();
     
     pipe([read, zip], function(error) {
@@ -136,7 +136,7 @@ test('file1 | gzip', function(t) {
 });
 
 test('file1 | gzip: error ENOENT', function(t) {
-    var read        = fs.createReadStream(__filename + random),
+    const read        = fs.createReadStream(__filename + random),
         zip         = zlib.createGzip();
     
     pipe([read, zip], function(error) {
@@ -146,7 +146,7 @@ test('file1 | gzip: error ENOENT', function(t) {
 });
 
 test('file1 | gzip: error EISDIR', function(t) {
-    var read        = fs.createReadStream('/'),
+    const read        = fs.createReadStream('/'),
         zip         = zlib.createGzip();
     
     pipe([read, zip], function(error) {
@@ -156,7 +156,7 @@ test('file1 | gzip: error EISDIR', function(t) {
 });
 
 test('file1 | gunzip: error header check', function(t) {
-    var read    = fs.createReadStream(__filename),
+    const read    = fs.createReadStream(__filename),
         gunzip  = zlib.createGunzip();
     
     pipe([read, gunzip], function(error) {
@@ -166,8 +166,8 @@ test('file1 | gunzip: error header check', function(t) {
 });
 
 test('file1, file2 | response: end false', function(t) {
-    var server = http.createServer(function (req, res) {
-        var read1 = fs.createReadStream(__filename),
+    const server = http.createServer(function (req, res) {
+        const read1 = fs.createReadStream(__filename),
             read2 = fs.createReadStream(__filename);
         
         pipe([read1, res], {end: false}, function() {
@@ -184,7 +184,7 @@ test('file1, file2 | response: end false', function(t) {
             console.log('request: http://127.0.0.1:7331');
             
             pipe.getBody(res, function(error, data) {
-                var file = fs.readFileSync(__filename, 'utf8');
+                const file = fs.readFileSync(__filename, 'utf8');
                 t.equal(data, file + file, 'reponse == file1 + file2');
                 t.end();
                 server.close();
@@ -202,8 +202,8 @@ test('file1, file2 | response: end false', function(t) {
 });
 
  test('file1, file2 | options: empty object', function(t) {
-    var server = http.createServer(function (req, res) {
-        var read1 = fs.createReadStream(__filename),
+    const server = http.createServer(function (req, res) {
+        const read1 = fs.createReadStream(__filename),
             read2 = fs.createReadStream(__filename);
         
         pipe([read1, res], {}, function() {
@@ -219,7 +219,7 @@ test('file1, file2 | response: end false', function(t) {
             console.log('request: http://127.0.0.1:7331');
             
             pipe.getBody(res, function(error, data) {
-                var file = fs.readFileSync(__filename, 'utf8');
+                const file = fs.readFileSync(__filename, 'utf8');
                 t.equal(data, file, 'reponse == file1 + file2');
                 t.end();
                 server.close();
@@ -237,11 +237,11 @@ test('file1, file2 | response: end false', function(t) {
  });
 
 function tryPipe(from, to, fn) {
-    var read    = fs.createReadStream(from),
+    const read    = fs.createReadStream(from),
         write   = fs.createWriteStream(to);
     
     pipe([read, write], function(error) {
-        var name = checkListenersLeak([read, write]);
+        const name = checkListenersLeak([read, write]);
         
         if (name)
             console.error('possible memory leak: ', name);
@@ -251,14 +251,14 @@ function tryPipe(from, to, fn) {
 }
 
 function checkListenersLeak(streams) {
-    var name,
-        events  = ['open', 'error', 'end', 'finish'],
-        regExp  = /^function (onError|onReadError|onWriteError|onReadEnd|onWriteFinish)/;
+    let name;
+    const events  = ['open', 'error', 'end', 'finish'];
+    const regExp  = /^function (onError|onReadError|onWriteError|onReadEnd|onWriteFinish)/;
     
     streams.some(function(stream) {
         events.some(function(event) {
             stream.listeners(event).some(function(fn) {
-                var is = (fn + '').match(regExp);
+                const is = (fn + '').match(regExp);
                 
                 if (is)
                     name = is[1];
