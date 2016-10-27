@@ -40,6 +40,9 @@ pipe.getBody(readStream, function(error, data) {
     console.log(error || data);
 });
 ```
+## Related
+
+- [Pullout](https://github.com/coderaiser/pullout "Pullout") - pull out data from stream
 
 ## License
 MIT
