@@ -1,3 +1,16 @@
+2016.10.27, v1.2.2
+
+feature:
+- (package) nyc v8.3.2
+- (package) scripts: lint
+- (pipe-io) getBody -> pullout
+- (ignore) add swp
+- (pipe) rm iifee
+- (package) scripts: watch:test
+- (travis) node_js: add 7
+- (travis) node: 4, 5
+
+
 2015.12.21, v1.2.1
 
 feature:
