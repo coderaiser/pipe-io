@@ -178,6 +178,28 @@ test('file1 | gunzip | untar: error header check', function(t) {
     });
 });
 
+test('tar | gzip | file', (t) => {
+    const fixture = path.join(__dirname, 'fixture');
+    const from = path.join(fixture, 'pipe.txt');
+    const to = path.join(os.tmpdir(), `${Math.random()}.tar.gz`);
+    const tarStream = tar.pack(fixture, {
+        entries: [
+            'pipe.txt'
+        ]
+    });
+    
+    const gzip = zlib.createGzip();
+    const write = fs.createWriteStream(to);
+    
+    pipe([tarStream, gzip, write], (error) => {
+        const toFile = fs.readFileSync(to);
+        const fromFile = fs.readFileSync(`${from}.tar.gz`);
+        
+        t.equal(toFile.length, fromFile.length, 'should pack file');
+        t.end();
+    });
+});
+
 test('file1, file2 | response: end false', function(t) {
     const server = http.createServer(function (req, res) {
         const read1 = fs.createReadStream(__filename),
