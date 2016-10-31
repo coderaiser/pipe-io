@@ -1,3 +1,12 @@
+2016.10.31, v1.2.5
+
+fix:
+- (pipe) tar | gzip | file
+
+feature:
+- (npmignore) add coverage
+
+
 2016.10.27, v1.2.4
 
 fix:
