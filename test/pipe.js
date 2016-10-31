@@ -195,7 +195,8 @@ test('tar | gzip | file', (t) => {
         const toFile = fs.readFileSync(to);
         const fromFile = fs.readFileSync(`${from}.tar.gz`);
         
-        t.equal(toFile.length, fromFile.length, 'should pack file');
+        fs.unlinkSync(to);
+        t.ok(toFile.equals(fromFile), 'should pack file');
         t.end();
     });
 });
