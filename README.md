@@ -15,14 +15,14 @@ Create pipe between streams and adds callback wich would
 be called once whenever everything is done, or error occures.
 
 ```js
-var pipe        = require('pipe-io'),
-    fs          = require('fs'),
-    NAME        = 'README.md',
-    NAME2       = 'README2.md',
-    readStream  = fs.createReadStream(NAME),
-    writeStream = fs.createWriteStream(NAME2);
+const pipe = require('pipe-io');
+const fs = require('fs');
+const NAME = 'README.md';
+const NAME2 = 'README2.md';
+const readStream = fs.createReadStream(NAME);
+const writeStream = fs.createWriteStream(NAME2);
 
-pipe([readStream, writeStream], function(error) {
+pipe([readStream, writeStream], (error) => {
     console.log(error || 'done');
 });
 ```
@@ -31,12 +31,12 @@ pipe([readStream, writeStream], function(error) {
 Get body of readStream
 
 ```js
-var pipe        = require('pipe-io'),
-    fs          = require('fs'),
-    NAME        = 'README.md',
-    readStream  = fs.createReadStream(NAME);
+const pipe = require('pipe-io');
+const fs = require('fs');
+const NAME = 'README.md';
+const readStream = fs.createReadStream(NAME);
 
-pipe.getBody(readStream, function(error, data) {
+pipe.getBody(readStream, (error, data) => {
     console.log(error || data);
 });
 ```
@@ -57,3 +57,4 @@ MIT
 [DependencyStatusURL]:      https://gemnasium.com/coderaiser/pipe-io "Dependency Status"
 [LicenseURL]:               https://tldrlegal.com/license/mit-license "MIT License"
 [CoverageURL]:              https://coveralls.io/github/coderaiser/pipe-io?branch=master
+
