@@ -27,20 +27,6 @@ pipe([readStream, writeStream], (error) => {
 });
 ```
 
-### getBody
-Get body of readStream
-
-```js
-const pipe = require('pipe-io');
-const fs = require('fs');
-const NAME = 'README.md';
-const readStream = fs.createReadStream(NAME);
-
-pipe.getBody(readStream, (error, data) => {
-    console.log(error || data);
-});
-```
-
 ## Environments
 
 In old `node.js` environments that not fully supports `es2015`, `pullout` could be used with:
