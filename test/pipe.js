@@ -57,12 +57,21 @@ test('file1 | file2: no error', function(t) {
 });
 
 test('file1 | file2: write open EACESS', function(t) {
-    const name    = path.basename(__filename),
-        nameTmp = '/' + name + random;
+    const name = path.basename(__filename);
+    const nameTmp = '/' + name + random;
     
     tryPipe(__filename, nameTmp, function(error) {
         t.ok(error, error && error.message);
-        
+        t.end();
+    });
+});
+
+test('file1 | file2: write open EACESS: big file', function(t) {
+    const name = path.basename(__filename);
+    const nameTmp = '/' + name + random;
+    
+    tryPipe('/bin/bash', nameTmp, function(error) {
+        t.ok(error, error && error.message);
         t.end();
     });
 });
