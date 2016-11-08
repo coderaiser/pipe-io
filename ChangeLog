@@ -1,3 +1,9 @@
+2016.11.08, v1.2.7
+
+fix:
+- (pipe) file1 | file2: write open EACESS: big file
+
+
 2016.11.08, v1.2.6
 
 fix:
