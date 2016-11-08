@@ -200,6 +200,25 @@ test('tar | gzip | file', (t) => {
     });
 });
 
+test('tar | gzip | file: error: EACESS', (t) => {
+    const fixture = path.join(__dirname, 'fixture');
+    const from = path.join(fixture, 'pipe.txt');
+    const to = path.join(`/${Math.random()}.tar.gz`);
+    const tarStream = tar.pack(fixture, {
+        entries: [
+            'pipe.txt'
+        ]
+    });
+    
+    const gzip = zlib.createGzip();
+    const write = fs.createWriteStream(to);
+    
+    pipe([tarStream, gzip, write], (error) => {
+        t.ok(error);
+        t.end();
+    });
+});
+
 test('file1, file2 | response: end false', function(t) {
     const server = http.createServer((req, res) => {
         const read1 = fs.createReadStream(__filename);
