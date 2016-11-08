@@ -1,3 +1,9 @@
+2016.11.08, v2.0.1
+
+feature:
+- (pipe-io) rm getBody: use pullout for this purpose
+
+
 2016.11.08, v2.0.0
 
 feature:
