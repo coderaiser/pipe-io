@@ -29,7 +29,7 @@ pipe([readStream, writeStream], (error) => {
 
 ## Environments
 
-In old `node.js` environments that not fully supports `es2015`, `pullout` could be used with:
+In old `node.js` environments that not fully supports `es2015`, `pipe` could be used with:
 
 ```js
 var pipe = require('pipe-io/legacy');
