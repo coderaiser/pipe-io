@@ -13,27 +13,32 @@
     "url": "git://github.com/coderaiser/pipe-io.git"
   },
   "scripts": {
+    "test": "tape test/*.js",
     "lint": "redrun lint:*",
     "lint:lib": "eslint lib",
     "lint:test": "eslint --rule 'no-console:0' test",
-    "test": "tape test/*.js",
-    "watch:test": "nodemon -w lib -w test -x \"npm test\"",
+    "watch:test": "npm run watcher -- \"npm test\"",
+    "watcher": "nodemon -w lib -w test -x",
     "coverage": "nyc npm test",
-    "report": "nyc report --reporter=text-lcov | coveralls"
+    "report": "nyc report --reporter=text-lcov | coveralls",
+    "wisdom": "npm run build",
+    "6to5": "buble lib -o legacy",
+    "build": "redrun 6to5 legacy",
+    "legacy": "echo \"module.exports = require('./pipe');\" > legacy/index.js"
   },
-  "dependencies": {
-    "pullout": "^1.0.0"
-  },
+  "dependencies": {},
   "license": "MIT",
   "engines": {
     "node": ">=0.8"
   },
   "main": "lib/pipe.js",
   "devDependencies": {
+    "buble": "^0.14.2",
     "coveralls": "^2.11.6",
     "eslint": "^3.8.1",
     "nodemon": "^1.11.0",
     "nyc": "^8.3.2",
+    "pullout": "^1.0.1",
     "redrun": "^5.9.2",
     "tape": "^4.2.0",
     "tar-fs": "^1.14.0"

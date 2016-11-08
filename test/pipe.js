@@ -7,6 +7,7 @@ const os      = require('os');
 const zlib    = require('zlib');
 
 const tar = require('tar-fs');
+const pullout = require('pullout');
 
 const pipe    = require('..');
 const test    = require('tape');
@@ -17,27 +18,6 @@ test('check parameters', function(t) {
     t.throws(pipe, /streams could not be empty!/, 'check streams');
     t.throws(pipe.bind(null, []), /callback could not be empty!/, 'check callback');
     t.end();
-});
-
-test('getBody', function(t) {
-    const read = fs.createReadStream(__filename);
-    
-    pipe.getBody(read, function(error, data) {
-        const file = fs.readFileSync(__filename, 'utf8');
-        
-        t.equal(data, file, 'getbody <-> readFile');
-        
-        t.end();
-    });
-});
-
-test('getBody: error', function(t) {
-    const read = fs.createReadStream(String(Math.random()));
-    
-    pipe.getBody(read, function(error) {
-        t.ok(error, 'read error: ' + error.message); 
-        t.end();
-    });
 });
 
 test('file1 | file2: no error', function(t) {
@@ -249,7 +229,7 @@ test('file1, file2 | response: end false', function(t) {
         http.get(url, (res) => {
             console.log(`request: ${url}`);
             
-            pipe.getBody(res, (error, data) => {
+            pullout(res, 'string', (error, data) => {
                 const file = fs.readFileSync(__filename, 'utf8');
                 t.equal(data, file + file, 'reponse == file1 + file2');
                 t.end();
@@ -284,7 +264,7 @@ test('file1, file2 | options: empty object', function(t) {
         http.get('http://127.0.0.1:7331', function(res) {
             console.log('request: http://127.0.0.1:7331');
             
-            pipe.getBody(res, function(error, data) {
+            pullout(res, 'string', (error, data) => {
                 const file = fs.readFileSync(__filename, 'utf8');
                 t.equal(data, file, 'reponse == file1 + file2');
                 t.end();

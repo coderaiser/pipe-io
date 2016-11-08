@@ -40,6 +40,15 @@ pipe.getBody(readStream, (error, data) => {
     console.log(error || data);
 });
 ```
+
+## Environments
+
+In old `node.js` environments that not fully supports `es2015`, `pullout` could be used with:
+
+```js
+var pipe = require('pipe-io/legacy');
+```
+
 ## Related
 
 - [Pullout](https://github.com/coderaiser/pullout "Pullout") - pull out data from stream
