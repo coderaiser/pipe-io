@@ -1,3 +1,9 @@
+2016.11.08, v1.2.6
+
+fix:
+- (pipe) pipe tar | zip | file
+
+
 2016.10.31, v1.2.5
 
 fix:
