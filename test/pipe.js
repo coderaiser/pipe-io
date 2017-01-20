@@ -167,9 +167,19 @@ test('file1 | gunzip | untar: error header check', function(t) {
     });
 });
 
+test('file1 | gunzip | untar: error header check: gz', (t) => {
+    const read = fs.createReadStream(__dirname + '/fixture/awk.1.gz');
+    const gunzip = zlib.createGunzip();
+    const tarStream = tar.extract(__dirname);
+    
+    pipe([read, gunzip, tarStream], (error) => {
+        t.ok(error, error.message);
+        t.end();
+    });
+});
+
 test('tar | gzip | file', (t) => {
     const fixture = path.join(__dirname, 'fixture');
-    const from = path.join(fixture, 'pipe.txt');
     const to = path.join(os.tmpdir(), `${Math.random()}.tar.gz`);
     const tarStream = tar.pack(fixture, {
         entries: [
@@ -180,7 +190,7 @@ test('tar | gzip | file', (t) => {
     const gzip = zlib.createGzip();
     const write = fs.createWriteStream(to);
     
-    pipe([tarStream, gzip, write], (error) => {
+    pipe([tarStream, gzip, write], () => {
         const toFile = fs.readFileSync(to);
         
         fs.unlinkSync(to);
@@ -191,7 +201,6 @@ test('tar | gzip | file', (t) => {
 
 test('tar | gzip | file: error: EACESS', (t) => {
     const fixture = path.join(__dirname, 'fixture');
-    const from = path.join(fixture, 'pipe.txt');
     const to = path.join(`/${Math.random()}.tar.gz`);
     const tarStream = tar.pack(fixture, {
         entries: [
