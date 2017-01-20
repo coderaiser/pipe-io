@@ -1,3 +1,14 @@
+2017.01.20, v2.0.2
+
+fix:
+- (pipe) file1 | gunzip | untar: erro header check: gz
+
+feature:
+- (package) buble v0.15.1
+- (package) nyc v10.0.0
+- (package) nyc v9.0.1
+
+
 2016.11.08, v2.0.1
 
 feature:
