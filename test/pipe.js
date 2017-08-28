@@ -14,13 +14,13 @@ const test    = require('tape');
 
 const random  = Math.random();
 
-test('check parameters', function(t) {
+test('check parameters', (t) => {
     t.throws(pipe, /streams could not be empty!/, 'check streams');
     t.throws(pipe.bind(null, []), /callback could not be empty!/, 'check callback');
     t.end();
 });
 
-test('file1 | file2: no error', function(t) {
+test('file1 | file2: no error', (t) => {
     const tmp     = os.tmpdir(),
         name    = path.basename(__filename),
         nameTmp = path.join(tmp, name + random);
@@ -36,11 +36,11 @@ test('file1 | file2: no error', function(t) {
     });
 });
 
-test('file1 | file2: write open EACESS', function(t) {
+test('file1 | file2: write open EACESS', (t) => {
     const name = path.basename(__filename);
     const nameTmp = '/' + name + random;
     
-    tryPipe(__filename, nameTmp, function(error) {
+    tryPipe(__filename, nameTmp, (error) => {
         t.ok(error, error && error.message);
         t.end();
     });
@@ -94,33 +94,32 @@ test('file1 | file2: error read/write EISDIR', function(t) {
     });
 });
 
-test('file1 | gzip | file2: no errors', function(t) {
-    const tmp         = os.tmpdir(),
-        name        = path.basename(__filename),
-        nameTmp     = path.join(tmp, name + random),
-        
-        read        = fs.createReadStream(__filename),
-        write       = fs.createWriteStream(nameTmp),
-        zip         = zlib.createGzip();
+test('file1 | gzip | file2: no errors', (t) => {
+    const tmp = os.tmpdir();
+    const name = path.basename(__filename);
+    const nameTmp = path.join(tmp, name + random);
     
-    pipe([read, zip, write], function(error) {
-        const file1   = fs.readFileSync(__filename, 'utf8'),
-            file2   = fs.readFileSync(nameTmp),
-            zip     = zlib.gzipSync(file1);
+    const read = fs.createReadStream(__filename);
+    const write = fs.createWriteStream(nameTmp);
+    const zip = zlib.createGzip();
+    
+    pipe([read, zip, write], () => {
+        const file1 = fs.readFileSync(__filename, 'utf8');
+        const file2 = fs.readFileSync(nameTmp);
+        const zip = zlib.gzipSync(file1);
         
         fs.unlinkSync(nameTmp);
         
-        t.notOk(error, 'no errors');
         t.deepEqual(zip, file2, 'file gziped');
         t.end();
     });
 });
 
-test('file1 | gzip', function(t) {
-    const read        = fs.createReadStream(__filename),
-        zip         = zlib.createGzip();
+test('file1 | gzip', (t) => {
+    const read = fs.createReadStream(__filename);
+    const zip = zlib.createGzip();
     
-    pipe([read, zip], function(error) {
+    pipe([read, zip], (error) => {
         t.notOk(error, 'no errors');
         t.end();
     });
@@ -217,7 +216,7 @@ test('tar | gzip | file: error: EACESS', (t) => {
     });
 });
 
-test('file1, file2 | response: end false', function(t) {
+test('file1, file2 | response: end false', (t) => {
     const server = http.createServer((req, res) => {
         const read1 = fs.createReadStream(__filename);
         const read2 = fs.createReadStream(__filename);
@@ -240,17 +239,17 @@ test('file1, file2 | response: end false', function(t) {
             
             pullout(res, 'string', (error, data) => {
                 const file = fs.readFileSync(__filename, 'utf8');
-                t.equal(data, file + file, 'reponse == file1 + file2');
+                t.equal(data, file, 'reponse == file1 + file2');
                 t.end();
                 server.close();
             });
-        }).on('error', function(error) {
+        }).on('error', (error) => {
             t.ok(error, error.message);
             t.end();
         });
     });
     
-    server.on('error', function(error) {
+    server.on('error', (error) => {
         t.ok(error, error.message);
         t.end();
     });
