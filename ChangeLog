@@ -1,3 +1,16 @@
+2018.05.02, v3.0.0
+
+feature:
+- (travis) add node v10
+- (pipe) drop support of node < 4
+- (package) redrun v6.0.0
+- (package) buble v0.19.2
+- (package) buble v0.18.0
+- (package) buble v0.17.0
+- (package) coveralls v3.0.0
+- (package) buble v0.16.0
+
+
 2017.08.29, v2.0.5
 
 feature:
