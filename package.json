@@ -16,26 +16,22 @@
     "test": "tape test/*.js",
     "lint": "redrun lint:*",
     "lint:lib": "eslint lib",
-    "lint:test": "eslint --rule 'no-console:0' test",
+    "lint:test": "eslint -c .eslintrc.test test",
     "watch:test": "npm run watcher -- \"npm test\"",
     "watcher": "nodemon -w lib -w test -x",
     "coverage": "nyc npm test",
-    "report": "nyc report --reporter=text-lcov | coveralls",
-    "wisdom": "npm run build",
-    "6to5": "buble lib -o legacy",
-    "build": "redrun 6to5 legacy",
-    "legacy": "echo \"module.exports = require('./pipe');\" > legacy/index.js"
+    "report": "nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {},
   "license": "MIT",
   "engines": {
-    "node": ">=0.8"
+    "node": ">=4"
   },
   "main": "lib/pipe.js",
   "devDependencies": {
-    "buble": "^0.19.2",
     "coveralls": "^3.0.0",
     "eslint": "^4.0.0",
+    "eslint-plugin-node": "^6.0.1",
     "nodemon": "^1.11.0",
     "nyc": "^11.0.2",
     "pullout": "^1.0.1",

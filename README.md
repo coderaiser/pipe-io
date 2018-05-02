@@ -27,14 +27,6 @@ pipe([readStream, writeStream], (error) => {
 });
 ```
 
-## Environments
-
-In old `node.js` environments that not fully supports `es2015`, `pipe` could be used with:
-
-```js
-var pipe = require('pipe-io/legacy');
-```
-
 ## Related
 
 - [Pullout](https://github.com/coderaiser/pullout "Pullout") - pull out data from stream
