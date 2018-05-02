@@ -1,3 +1,9 @@
+2018.05.02, v3.0.1
+
+fix:
+- (pipe) readable: read.resume -> this.read
+
+
 2018.05.02, v3.0.0
 
 feature:
