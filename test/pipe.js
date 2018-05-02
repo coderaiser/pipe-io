@@ -1,18 +1,18 @@
 'use strict';
 
-const fs      = require('fs');
-const path    = require('path');
-const http    = require('http');
-const os      = require('os');
-const zlib    = require('zlib');
+const fs = require('fs');
+const path = require('path');
+const http = require('http');
+const os = require('os');
+const zlib = require('zlib');
 
 const tar = require('tar-fs');
 const pullout = require('pullout');
 
-const pipe    = require('..');
-const test    = require('tape');
+const pipe = require('..');
+const test = require('tape');
 
-const random  = Math.random();
+const random = Math.random();
 
 test('check parameters', (t) => {
     t.throws(pipe, /streams could not be empty!/, 'check streams');
@@ -56,39 +56,39 @@ test('file1 | file2: write open EACESS: big file', (t) => {
     });
 });
 
-test('file1 | file2: read open ENOENT', function(t) {
+test('file1 | file2: read open ENOENT', (t) => {
     const tmp     = os.tmpdir(),
         name    = path.basename(__filename),
         nameTmp = path.join(tmp, name + random);
     
-    tryPipe(__filename + random, nameTmp, function(error) {
+    tryPipe(__filename + random, nameTmp, (error) => {
         t.ok(error, error && error.message);
         
         t.end();
     });
 });
 
-test('file1 | file2: error read EISDIR', function(t) {
-    const tmp         = os.tmpdir(),
-        name        = path.basename(__filename),
-        nameTmp     = path.join(tmp, name + random);
+test('file1 | file2: error read EISDIR', (t) => {
+    const tmp = os.tmpdir();
+    const name = path.basename(__filename);
+    const nameTmp = path.join(tmp, name + random);
     
-    tryPipe('/', nameTmp, function(error) {
+    tryPipe('/', nameTmp, (error) => {
         fs.unlinkSync(nameTmp);
         t.equal(error.code, 'EISDIR', 'EISDIR: read error');
         t.end();
     });
 });
 
-test('file1 | file2: error write EISDIR', function(t) {
-    tryPipe(__filename, '/', function(error) {
+test('file1 | file2: error write EISDIR', (t) => {
+    tryPipe(__filename, '/', (error) => {
         t.equal(error.code, 'EISDIR', 'EISDIR: write error');
         t.end();
     });
 });
 
-test('file1 | file2: error read/write EISDIR', function(t) {
-    tryPipe(__dirname, '/', function(error) {
+test('file1 | file2: error read/write EISDIR', (t) => {
+    tryPipe(__dirname, '/', (error) => {
         t.equal(error.code, 'EISDIR', 'read/write EISDIR');
         t.end();
     });
@@ -125,42 +125,42 @@ test('file1 | gzip', (t) => {
     });
 });
 
-test('file1 | gzip: error ENOENT', function(t) {
-    const read        = fs.createReadStream(__filename + random),
-        zip         = zlib.createGzip();
+test('file1 | gzip: error ENOENT', (t) => {
+    const read = fs.createReadStream(__filename + random);
+    const zip = zlib.createGzip();
     
-    pipe([read, zip], function(error) {
+    pipe([read, zip], (error) => {
         t.ok(error, error.message);
         t.end();
     });
 });
 
-test('file1 | gzip: error EISDIR', function(t) {
-    const read        = fs.createReadStream('/'),
-        zip         = zlib.createGzip();
+test('file1 | gzip: error EISDIR', (t) => {
+    const read = fs.createReadStream('/');
+    const zip = zlib.createGzip();
     
-    pipe([read, zip], function(error) {
+    pipe([read, zip], (error) => {
         t.ok(error, error.message);
         t.end();
     });
 });
 
-test('file1 | gunzip: error header check', function(t) {
-    const read    = fs.createReadStream(__filename),
-        gunzip  = zlib.createGunzip();
+test('file1 | gunzip: error header check', (t) => {
+    const read = fs.createReadStream(__filename);
+    const gunzip = zlib.createGunzip();
     
-    pipe([read, gunzip], function(error) {
+    pipe([read, gunzip], (error) => {
         t.ok(error, error.message);
         t.end();
     });
 });
 
-test('file1 | gunzip | untar: error header check', function(t) {
+test('file1 | gunzip | untar: error header check', (t) => {
     const read = fs.createReadStream(__filename);
     const gunzip = zlib.createGunzip();
     const tarStream = tar.extract(__dirname);
     
-    pipe([read, gunzip, tarStream], function(error) {
+    pipe([read, gunzip, tarStream], (error) => {
         t.ok(error, error.message);
         t.end();
     });
