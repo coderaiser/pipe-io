@@ -57,10 +57,11 @@ test('file1 | file2: write open EACESS: big file', (t) => {
 });
 
 test('file1 | file2: read open ENOENT', (t) => {
-    const tmp     = os.tmpdir(),
-        name    = path.basename(__filename),
-        nameTmp = path.join(tmp, name + random);
+    const tmp = os.tmpdir();
+    const name = path.basename(__filename);
+    const nameTmp = path.join(tmp, name + random);
     
+    console.log(nameTmp);
     tryPipe(__filename + random, nameTmp, (error) => {
         t.ok(error, error && error.message);
         
