@@ -61,7 +61,6 @@ test('file1 | file2: read open ENOENT', (t) => {
     const name = path.basename(__filename);
     const nameTmp = path.join(tmp, name + random);
     
-    console.log(nameTmp);
     tryPipe(__filename + random, nameTmp, (error) => {
         t.ok(error, error && error.message);
         
