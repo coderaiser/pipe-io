@@ -1,3 +1,12 @@
+2018.05.05, v3.0.2
+
+fix:
+- (pipe) fs: read stream and write stream is directories
+
+feature:
+- (pipe) read error and finish -> read error and write open
+
+
 2018.05.02, v3.0.1
 
 fix:
