@@ -21,9 +21,9 @@ test('check parameters', (t) => {
 });
 
 test('file1 | file2: no error', (t) => {
-    const tmp     = os.tmpdir(),
-        name    = path.basename(__filename),
-        nameTmp = path.join(tmp, name + random);
+    const tmp = os.tmpdir();
+    const name = path.basename(__filename);
+    const nameTmp = path.join(tmp, name + random);
      
     tryPipe(__filename, nameTmp, () => {
         const file1 = fs.readFileSync(__filename, 'utf8');
@@ -81,14 +81,14 @@ test('file1 | file2: error read EISDIR', (t) => {
     });
 });
 
-test('file1 | file2: error write EISDIR', (t) => {
+test('file | dir: error write EISDIR', (t) => {
     tryPipe(__filename, '/', (error) => {
         t.equal(error.code, 'EISDIR', 'EISDIR: write error');
         t.end();
     });
 });
 
-test('file1 | file2: error read/write EISDIR', (t) => {
+test('dir1 | dir2: error read/write EISDIR', (t) => {
     tryPipe(__dirname, '/', (error) => {
         t.equal(error.code, 'EISDIR', 'read/write EISDIR');
         t.end();
