@@ -32,11 +32,13 @@
     "coveralls": "^3.0.0",
     "eslint": "^4.0.0",
     "eslint-plugin-node": "^6.0.1",
+    "gunzip-maybe": "^1.4.1",
     "nodemon": "^1.11.0",
     "nyc": "^11.0.2",
     "pullout": "^1.0.1",
     "redrun": "^6.0.0",
     "tape": "^4.2.0",
-    "tar-fs": "^1.14.0"
+    "tar-fs": "^1.14.0",
+    "try-to-catch": "^1.0.2"
   }
 }

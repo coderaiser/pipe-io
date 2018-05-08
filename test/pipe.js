@@ -5,9 +5,12 @@ const path = require('path');
 const http = require('http');
 const os = require('os');
 const zlib = require('zlib');
+const {promisify} = require('util');
 
 const tar = require('tar-fs');
+const gunzip = require('gunzip-maybe');
 const pullout = require('pullout');
+const tryToCatch = require('try-to-catch');
 
 const pipe = require('..');
 const test = require('tape');
@@ -17,6 +20,16 @@ const random = Math.random();
 test('check parameters', (t) => {
     t.throws(pipe, /streams could not be empty!/, 'check streams');
     t.throws(pipe.bind(null, []), /callback could not be empty!/, 'check callback');
+    t.end();
+});
+
+test('file1 | gunzip maybe: error', async (t) => {
+    const _pipe = promisify(pipe);
+    const file = fs.createReadStream('/hello');
+    
+    const [e] = await tryToCatch(_pipe, [file, gunzip()])
+    
+    t.equal(e.code, 'ENOENT', 'should return error');
     t.end();
 });
 
