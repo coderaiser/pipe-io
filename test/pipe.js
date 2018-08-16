@@ -229,6 +229,38 @@ test('tar | gzip | file: error: EACESS', (t) => {
     });
 });
 
+test('put file', (t) => {
+    const server = http.createServer((req, res) => {
+        const write = fs.createWriteStream('/xxxxxxx');
+        
+        pipe([req, write], () => {
+            t.pass('should not crash');
+            server.close();
+            t.end();
+        });
+        
+        res.end();
+    });
+    
+    server.listen(() => {
+        const {port} = server.address();
+        console.log(`server: 127.0.0.1:${port}`);
+        
+        const options = {
+            method: 'PUT',
+            hostname: 'localhost',
+            port,
+            path: '/',
+        };
+        
+        const req = http.request(options, (res) => {
+            server.close();
+        });
+        
+        req.end();
+    });
+});
+
 test('file1, file2 | response: end false', (t) => {
     const server = http.createServer((req, res) => {
         const read1 = fs.createReadStream(__filename);
