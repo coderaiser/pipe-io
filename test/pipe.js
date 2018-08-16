@@ -253,7 +253,7 @@ test('put file', (t) => {
             path: '/',
         };
         
-        const req = http.request(options, (res) => {
+        const req = http.request(options, () => {
             server.close();
         });
         
