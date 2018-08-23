@@ -1,3 +1,9 @@
+2018.08.23, v3.0.5
+
+fix:
+- (pipe) isWriteOpened
+
+
 2018.08.16, v3.0.4
 
 fix:
