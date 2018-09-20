@@ -1,3 +1,12 @@
+2018.09.20, v3.0.6
+
+fix:
+- (pipe) do not remove onWriteOpen
+
+feature:
+- (package) nyc v13.0.1
+
+
 2018.08.23, v3.0.5
 
 fix:
