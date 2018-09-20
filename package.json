@@ -34,7 +34,7 @@
     "eslint-plugin-node": "^7.0.1",
     "gunzip-maybe": "^1.4.1",
     "nodemon": "^1.11.0",
-    "nyc": "^12.0.2",
+    "nyc": "^13.0.1",
     "pullout": "^2.0.0",
     "redrun": "^6.0.0",
     "tape": "^4.2.0",
