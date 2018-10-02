@@ -1,3 +1,9 @@
+2018.10.02, v3.0.8
+
+feature:
+- (pipe) pipeline.apply -> pipeline
+
+
 2018.10.02, v3.0.7
 
 feature:
