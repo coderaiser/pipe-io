@@ -1,3 +1,10 @@
+2018.10.02, v3.0.7
+
+feature:
+- (pipe) add ability to use built-in pipeline
+- (package) redrun v7.0.0
+
+
 2018.09.20, v3.0.6
 
 fix:
