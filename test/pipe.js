@@ -5,6 +5,7 @@ const path = require('path');
 const http = require('http');
 const os = require('os');
 const zlib = require('zlib');
+const pump = require('pump');
 const {promisify} = require('util');
 const stream = require('stream');
 const {pipeline} = stream;
@@ -39,6 +40,20 @@ test('file1 | gunzip maybe: error', async (t) => {
 
 test('file1 | file2: pipeline', async (t) => {
     stream.pipeline = pipeline;
+    
+    const pipe = promisify(reRequire('..'));
+    const file = fs.createReadStream('/hello');
+    
+    const [e] = await tryToCatch(pipe, [file, gunzip()])
+    
+    stream.pipeline = null;
+    
+    t.equal(e.code, 'ENOENT', 'should return error');
+    t.end();
+});
+
+test('file1 | file2: pipeline for node < 10', async (t) => {
+    stream.pipeline = pump;
     
     const pipe = promisify(reRequire('..'));
     const file = fs.createReadStream('/hello');
