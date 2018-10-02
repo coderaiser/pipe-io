@@ -33,6 +33,7 @@
     "eslint": "^5.3.0",
     "eslint-plugin-node": "^7.0.1",
     "gunzip-maybe": "^1.4.1",
+    "mock-require": "^3.0.2",
     "nodemon": "^1.11.0",
     "nyc": "^13.0.1",
     "pullout": "^2.0.0",
