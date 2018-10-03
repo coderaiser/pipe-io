@@ -6,7 +6,7 @@ Uses [stream.pipeline](https://nodejs.org/dist/latest-v10.x/docs/api/stream.html
 ## Install
 
 ```
-npm i pipe-io --save
+npm i pipe-io
 ```
 
 ## API
