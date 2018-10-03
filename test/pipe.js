@@ -92,6 +92,26 @@ test('file1 | file2: no error', async (t) => {
     t.end();
 });
 
+test('file1 | file2: no open event', async (t) => {
+    const tmp = os.tmpdir();
+    const name = path.basename(__filename);
+    const nameTmp = path.join(tmp, name + random);
+    const from = fs.createReadStream(__filename);
+    const to = fs.createWriteStream(nameTmp);
+    
+    to.on('open', async () => {
+        await _pipe([from, to]);
+        
+        const file1 = fs.readFileSync(__filename, 'utf8');
+        const file2 = fs.readFileSync(nameTmp, 'utf8');
+        
+        fs.unlinkSync(nameTmp);
+        
+        t.equal(file1, file2, 'files equal');
+        t.end();
+    });
+});
+
 test('file1 | file2: write open EACESS', (t) => {
     const name = path.basename(__filename);
     const nameTmp = '/' + name + random;
