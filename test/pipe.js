@@ -18,6 +18,7 @@ const tryToCatch = require('try-to-catch');
 const {reRequire} = require('mock-require');
 
 const pipe = require('..');
+const _pipe = promisify(pipe);
 const test = require('tape');
 
 const random = Math.random();
@@ -29,7 +30,15 @@ test('check parameters', (t) => {
 });
 
 test('file1 | gunzip maybe: error', async (t) => {
-    const _pipe = promisify(pipe);
+    const file = fs.createReadStream('/hello');
+    
+    const [e] = await tryToCatch(_pipe, [file, gunzip()])
+    
+    t.equal(e.code, 'ENOENT', 'should return error');
+    t.end();
+});
+
+test('file1 | gunzip maybe: error', async (t) => {
     const file = fs.createReadStream('/hello');
     
     const [e] = await tryToCatch(_pipe, [file, gunzip()])
@@ -66,20 +75,21 @@ test('file1 | file2: pipeline for node < 10', async (t) => {
     t.end();
 });
 
-test('file1 | file2: no error', (t) => {
+test('file1 | file2: no error', async (t) => {
     const tmp = os.tmpdir();
     const name = path.basename(__filename);
     const nameTmp = path.join(tmp, name + random);
+    const _tryPipe = promisify(tryPipe);
      
-    tryPipe(__filename, nameTmp, () => {
-        const file1 = fs.readFileSync(__filename, 'utf8');
-        const file2 = fs.readFileSync(nameTmp, 'utf8');
-        
-        fs.unlinkSync(nameTmp);
-        
-        t.equal(file1, file2, 'files equal');
-        t.end();
-    });
+    await _tryPipe(__filename, nameTmp);
+    
+    const file1 = fs.readFileSync(__filename, 'utf8');
+    const file2 = fs.readFileSync(nameTmp, 'utf8');
+    
+    fs.unlinkSync(nameTmp);
+    
+    t.equal(file1, file2, 'files equal');
+    t.end();
 });
 
 test('file1 | file2: write open EACESS', (t) => {
@@ -140,25 +150,25 @@ test('dir1 | dir2: error read/write EISDIR', (t) => {
     });
 });
 
-test('file1 | gzip | file2: no errors', (t) => {
+test('file1 | gzip | file2: no errors', async (t) => {
     const tmp = os.tmpdir();
     const name = path.basename(__filename);
     const nameTmp = path.join(tmp, name + random);
     
     const read = fs.createReadStream(__filename);
     const write = fs.createWriteStream(nameTmp);
-    const zip = zlib.createGzip();
+    const zipStream = zlib.createGzip();
     
-    pipe([read, zip, write], () => {
-        const file1 = fs.readFileSync(__filename, 'utf8');
-        const file2 = fs.readFileSync(nameTmp);
-        const zip = zlib.gzipSync(file1);
-        
-        fs.unlinkSync(nameTmp);
-        
-        t.deepEqual(zip, file2, 'file gziped');
-        t.end();
-    });
+    await _pipe([read, zipStream, write]);
+    
+    const file1 = fs.readFileSync(__filename, 'utf8');
+    const file2 = fs.readFileSync(nameTmp);
+    const zip = zlib.gzipSync(file1);
+    
+    fs.unlinkSync(nameTmp);
+    
+    t.deepEqual(zip, file2, 'file gziped');
+    t.end();
 });
 
 test('file1 | gzip', (t) => {
@@ -201,26 +211,26 @@ test('file1 | gunzip: error header check', (t) => {
     });
 });
 
-test('file1 | gunzip | untar: error header check', (t) => {
+test('file1 | gunzip | untar: error header check', async (t) => {
     const read = fs.createReadStream(__filename);
     const gunzip = zlib.createGunzip();
     const tarStream = tar.extract(__dirname);
     
-    pipe([read, gunzip, tarStream], (error) => {
-        t.ok(error, error.message);
-        t.end();
-    });
+    const [error] = await tryToCatch(_pipe, [read, gunzip, tarStream]);
+    
+    t.ok(error, error.message);
+    t.end();
 });
 
-test('file1 | gunzip | untar: error header check: gz', (t) => {
+test('file1 | gunzip | untar: error header check: gz', async (t) => {
     const read = fs.createReadStream(__dirname + '/fixture/awk.1.gz');
     const gunzip = zlib.createGunzip();
     const tarStream = tar.extract(__dirname);
     
-    pipe([read, gunzip, tarStream], (error) => {
-        t.ok(error, error.message);
-        t.end();
-    });
+    const [error] = await tryToCatch(_pipe, [read, gunzip, tarStream]);
+    
+    t.ok(error, error.message);
+    t.end();
 });
 
 test('tar | gzip | file', (t) => {
