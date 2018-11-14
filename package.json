@@ -41,6 +41,8 @@
     "redrun": "^7.0.0",
     "tape": "^4.2.0",
     "tar-fs": "^1.14.0",
-    "try-to-catch": "^1.0.2"
+    "through2": "^3.0.0",
+    "try-to-catch": "^1.0.2",
+    "try-to-tape": "^1.0.0"
   }
 }

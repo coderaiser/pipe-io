@@ -5,12 +5,15 @@ const path = require('path');
 const http = require('http');
 const os = require('os');
 const zlib = require('zlib');
+
+const through2 = require('through2');
 const pump = require('pump');
 const {promisify} = require('util');
 const stream = require('stream');
 const {pipeline} = stream;
 stream.pipeline = null;
 
+const tryToTape = require('try-to-tape');
 const tar = require('tar-fs');
 const gunzip = require('gunzip-maybe');
 const pullout = require('pullout');
@@ -19,7 +22,7 @@ const {reRequire} = require('mock-require');
 
 const pipe = require('..');
 const _pipe = promisify(pipe);
-const test = require('tape');
+const test = tryToTape(require('tape'));
 
 const random = Math.random();
 
@@ -297,6 +300,40 @@ test('put file', (t) => {
         const write = fs.createWriteStream('/xxxxxxx');
         
         pipe([req, write], () => {
+            server.close();
+            
+            t.pass('should not crash');
+            t.end();
+        });
+        
+        res.end();
+    });
+    
+    server.listen(() => {
+        const {port} = server.address();
+        console.log(`server: 127.0.0.1:${port}`);
+        
+        const options = {
+            method: 'PUT',
+            hostname: 'localhost',
+            port,
+            path: '/',
+        };
+        
+        const req = http.request(options, () => {
+            server.close();
+        });
+        
+        req.end();
+    });
+});
+
+test('put file | unzip', (t) => {
+    const server = http.createServer((req, res) => {
+        const gunzip = zlib.createGunzip();
+        const transform = through2((chunk, enc, cb) => cb(null, chunk));
+        
+        pipe([req, gunzip, transform], () => {
             server.close();
             
             t.pass('should not crash');
