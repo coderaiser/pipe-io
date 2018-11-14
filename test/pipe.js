@@ -383,11 +383,12 @@ test('file1, file2 | response: end false', (t) => {
         http.get(url, (res) => {
             console.log(`request: ${url}`);
             
-            pullout(res, 'string', (error, data) => {
+            pullout(res).then((data) => {
                 const file = fs.readFileSync(__filename, 'utf8');
+                server.close();
+                
                 t.equal(data.length, file.length * 2, 'reponse == file1 + file2');
                 t.end();
-                server.close();
             });
         }).on('error', (error) => {
             t.ok(error, error.message);
@@ -417,11 +418,12 @@ test('file1, file2 | options: empty object', (t) => {
         http.get('http://127.0.0.1:7331', (res) => {
             console.log('request: http://127.0.0.1:7331');
             
-            pullout(res, 'string', (error, data) => {
+            pullout(res).then((data) => {
                 const file = fs.readFileSync(__filename, 'utf8');
+                server.close();
+                
                 t.equal(data.length, file.length, 'reponse == file');
                 t.end();
-                server.close();
             });
         }).on('error', (error) => {
             t.ok(error, error.message);
