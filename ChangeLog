@@ -1,3 +1,9 @@
+2018.11.21, v3.0.11
+
+fix:
+- (pipe) empty stream | write file error: rm pipeline (nodejs/node/issues/24517)
+
+
 2018.11.14, v3.0.10
 
 fix:
