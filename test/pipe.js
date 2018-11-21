@@ -8,18 +8,13 @@ const zlib = require('zlib');
 const {Readable} = require('stream');
 
 const through2 = require('through2');
-const pump = require('pump');
 const {promisify} = require('util');
-const stream = require('stream');
-const {pipeline} = stream;
-stream.pipeline = null;
 
 const tryToTape = require('try-to-tape');
 const tar = require('tar-fs');
 const gunzip = require('gunzip-maybe');
 const pullout = require('pullout');
 const tryToCatch = require('try-to-catch');
-const {reRequire} = require('mock-require');
 
 const pipe = require('..');
 const _pipe = promisify(pipe);
@@ -59,34 +54,6 @@ test('file1 | gunzip maybe: error', async (t) => {
     const file = fs.createReadStream('/hello');
     
     const [e] = await tryToCatch(_pipe, [file, gunzip()])
-    
-    t.equal(e.code, 'ENOENT', 'should return error');
-    t.end();
-});
-
-test('file1 | file2: pipeline', async (t) => {
-    stream.pipeline = pipeline;
-    
-    const pipe = promisify(reRequire('..'));
-    const file = fs.createReadStream('/hello');
-    
-    const [e] = await tryToCatch(pipe, [file, gunzip()])
-    
-    stream.pipeline = null;
-    
-    t.equal(e.code, 'ENOENT', 'should return error');
-    t.end();
-});
-
-test('file1 | file2: pipeline for node < 10', async (t) => {
-    stream.pipeline = pump;
-    
-    const pipe = promisify(reRequire('..'));
-    const file = fs.createReadStream('/hello');
-    
-    const [e] = await tryToCatch(pipe, [file, gunzip()])
-    
-    stream.pipeline = null;
     
     t.equal(e.code, 'ENOENT', 'should return error');
     t.end();
