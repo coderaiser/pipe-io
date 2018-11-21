@@ -5,6 +5,7 @@ const path = require('path');
 const http = require('http');
 const os = require('os');
 const zlib = require('zlib');
+const {Readable} = require('stream');
 
 const through2 = require('through2');
 const pump = require('pump');
@@ -29,6 +30,19 @@ const random = Math.random();
 test('check parameters', (t) => {
     t.throws(pipe, /streams could not be empty!/, 'check streams');
     t.throws(pipe.bind(null, []), /callback could not be empty!/, 'check callback');
+    t.end();
+});
+
+test('empty buffer | write file', async (t) => {
+    const inStream = new Readable({
+        read() {}
+    });
+    
+    inStream.push(null);
+    
+    const [e] = await tryToCatch(_pipe, [inStream, fs.createWriteStream('/')]);
+    
+    t.equal(e.code, 'EISDIR', 'should equal');
     t.end();
 });
 
