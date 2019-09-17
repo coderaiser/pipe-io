@@ -1,3 +1,12 @@
+2019.09.17, v4.0.0
+
+fix:
+- (pipe) error in the middle stream
+
+feature:
+- (pipe) callback -> promise
+
+
 2019.09.17, v3.0.12
 
 fix:
