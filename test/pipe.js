@@ -8,7 +8,10 @@ const zlib = require('zlib');
 const {Readable} = require('stream');
 
 const through2 = require('through2');
-const {promisify} = require('util');
+const {
+    callbackify,
+    promisify,
+} = require('util');
 
 const tar = require('tar-fs');
 const gunzip = require('gunzip-maybe');
@@ -16,17 +19,11 @@ const pullout = require('pullout');
 const tryToCatch = require('try-to-catch');
 const tarStream = require('tar-stream');
 
-const pipe = require('..');
-const _pipe = promisify(pipe);
+const _pipe = require('..');
+const pipe = callbackify(_pipe);
 const test = require('supertape');
 
 const random = Math.random();
-
-test('check parameters', (t) => {
-    t.throws(pipe, /streams could not be empty!/, 'check streams');
-    t.throws(pipe.bind(null, []), /callback could not be empty!/, 'check callback');
-    t.end();
-});
 
 test('empty buffer | write file', async (t) => {
     const inStream = new Readable({

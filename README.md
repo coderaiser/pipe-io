@@ -15,16 +15,17 @@ Create pipe between streams and adds callback wich would
 be called once whenever everything is done, or error occures.
 
 ```js
-const pipe = require('pipe-io');
 const fs = require('fs');
+
+const pipe = require('pipe-io');
+const tryToCatch = require('try-to-catch');
+
 const NAME = 'README.md';
 const NAME2 = 'README2.md';
 const readStream = fs.createReadStream(NAME);
 const writeStream = fs.createWriteStream(NAME2);
 
-pipe([readStream, writeStream], (error) => {
-    console.log(error || 'done');
-});
+const [e] = await tryToCatch(pipe, [readStream, writeStream]);
 ```
 
 ## Related
