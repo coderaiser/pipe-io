@@ -13,14 +13,14 @@
     "url": "git://github.com/coderaiser/pipe-io.git"
   },
   "scripts": {
-    "test": "tape test/*.js",
-    "lint": "redrun lint:*",
-    "lint:lib": "eslint lib",
-    "lint:test": "eslint -c .eslintrc.test test",
-    "watch:test": "npm run watcher -- \"npm test\"",
-    "watcher": "nodemon -w lib -w test -x",
-    "coverage": "nyc npm test",
-    "report": "nyc report --reporter=text-lcov | coveralls"
+    "test": "madrun test",
+    "fix:lint": "madrun fix:lint",
+    "lint": "madrun lint",
+    "lint:test": "madrun lint:test",
+    "watch:test": "madrun watch:test",
+    "watcher": "madrun watcher",
+    "coverage": "madrun coverage",
+    "report": "madrun report"
   },
   "dependencies": {},
   "license": "MIT",
@@ -41,10 +41,9 @@
     "pump": "^3.0.0",
     "putout": "^6.0.0",
     "redrun": "^7.0.0",
-    "tape": "^4.2.0",
+    "supertape": "^1.2.3",
     "tar-fs": "^2.0.0",
     "through2": "^3.0.0",
-    "try-to-catch": "^1.0.2",
-    "try-to-tape": "^1.0.0"
+    "try-to-catch": "^1.0.2"
   }
 }

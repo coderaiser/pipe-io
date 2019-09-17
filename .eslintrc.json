@@ -1,0 +1,17 @@
+{
+    "overrides": [{
+        "files": ["madrun.js", "test/**"],
+        "rules": {
+            "node/no-unsupported-features/es-syntax": "off",
+            "node/no-unsupported-features/node-builtins": "off"
+        }
+    }],
+    "extends": [
+        "plugin:putout/recommended",
+        "plugin:node/recommended"
+    ],
+    "plugins": [
+        "putout",
+        "node"
+    ]
+}

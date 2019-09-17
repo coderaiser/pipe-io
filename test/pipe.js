@@ -10,7 +10,6 @@ const {Readable} = require('stream');
 const through2 = require('through2');
 const {promisify} = require('util');
 
-const tryToTape = require('try-to-tape');
 const tar = require('tar-fs');
 const gunzip = require('gunzip-maybe');
 const pullout = require('pullout');
@@ -18,7 +17,7 @@ const tryToCatch = require('try-to-catch');
 
 const pipe = require('..');
 const _pipe = promisify(pipe);
-const test = tryToTape(require('tape'));
+const test = require('supertape');
 
 const random = Math.random();
 
@@ -30,7 +29,7 @@ test('check parameters', (t) => {
 
 test('empty buffer | write file', async (t) => {
     const inStream = new Readable({
-        read() {}
+        read() {},
     });
     
     inStream.push(null);
@@ -44,7 +43,7 @@ test('empty buffer | write file', async (t) => {
 test('file1 | gunzip maybe: error', async (t) => {
     const file = fs.createReadStream('/hello');
     
-    const [e] = await tryToCatch(_pipe, [file, gunzip()])
+    const [e] = await tryToCatch(_pipe, [file, gunzip()]);
     
     t.equal(e.code, 'ENOENT', 'should return error');
     t.end();
@@ -53,7 +52,7 @@ test('file1 | gunzip maybe: error', async (t) => {
 test('file1 | gunzip maybe: error', async (t) => {
     const file = fs.createReadStream('/hello');
     
-    const [e] = await tryToCatch(_pipe, [file, gunzip()])
+    const [e] = await tryToCatch(_pipe, [file, gunzip()]);
     
     t.equal(e.code, 'ENOENT', 'should return error');
     t.end();
@@ -64,7 +63,7 @@ test('file1 | file2: no error', async (t) => {
     const name = path.basename(__filename);
     const nameTmp = path.join(tmp, name + random);
     const _tryPipe = promisify(tryPipe);
-     
+    
     await _tryPipe(__filename, nameTmp);
     
     const file1 = fs.readFileSync(__filename, 'utf8');
@@ -242,8 +241,8 @@ test('tar | gzip | file', (t) => {
     const to = path.join(os.tmpdir(), `${Math.random()}.tar.gz`);
     const tarStream = tar.pack(fixture, {
         entries: [
-            'pipe.txt'
-        ]
+            'pipe.txt',
+        ],
     });
     
     const gzip = zlib.createGzip();
@@ -263,8 +262,8 @@ test('tar | gzip | file: error: EACESS', (t) => {
     const to = path.join(`/${Math.random()}.tar.gz`);
     const tarStream = tar.pack(fixture, {
         entries: [
-            'pipe.txt'
-        ]
+            'pipe.txt',
+        ],
     });
     
     const gzip = zlib.createGzip();
@@ -292,7 +291,6 @@ test('put file', (t) => {
     
     server.listen(() => {
         const {port} = server.address();
-        console.log(`server: 127.0.0.1:${port}`);
         
         const options = {
             method: 'PUT',
@@ -326,7 +324,6 @@ test('put file | unzip', (t) => {
     
     server.listen(() => {
         const {port} = server.address();
-        console.log(`server: 127.0.0.1:${port}`);
         
         const options = {
             method: 'PUT',
@@ -359,11 +356,7 @@ test('file1, file2 | response: end false', (t) => {
         const {port} = server.address();
         const url = `http://127.0.0.1:${port}`;
         
-        console.log(`server: 127.0.0.1:${port}`);
-        
         http.get(url, (res) => {
-            console.log(`request: ${url}`);
-            
             pullout(res).then((data) => {
                 const file = fs.readFileSync(__filename, 'utf8');
                 server.close();
@@ -394,11 +387,7 @@ test('file1, file2 | options: empty object', (t) => {
     });
     
     server.listen(7331, '127.0.0.1', () => {
-        console.log('server: 127.0.0.1:7331');
-        
         http.get('http://127.0.0.1:7331', (res) => {
-            console.log('request: http://127.0.0.1:7331');
-            
             pullout(res).then((data) => {
                 const file = fs.readFileSync(__filename, 'utf8');
                 server.close();
@@ -423,37 +412,7 @@ function tryPipe(from, to, fn) {
     const write = fs.createWriteStream(to);
     
     pipe([read, write], (error) => {
-        const name = checkListenersLeak([read, write]);
-        
-        if (name)
-            console.error('possible memory leak: ', name);
-        
         fn(error);
     });
-}
-
-function checkListenersLeak(streams) {
-    let name;
-    const events  = ['open', 'error', 'end', 'finish'];
-    const regExp  = /^function (onError|onReadError|onWriteError|onReadEnd|onWriteFinish)/;
-    
-    streams.some((stream) => {
-        events.some((event) => {
-            stream.listeners(event).some((fn) => {
-                const is = (fn + '').match(regExp);
-                
-                if (is)
-                    name = is[1];
-                
-                return name;
-            });
-            
-            return name;
-        });
-        
-        return name;
-    });
-    
-    return name;
 }
 
