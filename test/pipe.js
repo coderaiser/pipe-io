@@ -14,6 +14,7 @@ const tar = require('tar-fs');
 const gunzip = require('gunzip-maybe');
 const pullout = require('pullout');
 const tryToCatch = require('try-to-catch');
+const tarStream = require('tar-stream');
 
 const pipe = require('..');
 const _pipe = promisify(pipe);
@@ -55,6 +56,22 @@ test('file1 | gunzip maybe: error', async (t) => {
     const [e] = await tryToCatch(_pipe, [file, gunzip()]);
     
     t.equal(e.code, 'ENOENT', 'should return error');
+    t.end();
+});
+
+test('', async (t) => {
+    const name = __dirname + '/fixture/broken.tar.gz';
+    const streamFile = fs.createReadStream(name);
+    const streamUnzip = gunzip();
+    const streamParse = tarStream.extract();
+    
+    const [e] = await tryToCatch(_pipe, [
+        streamFile,
+        streamUnzip,
+        streamParse,
+    ]);
+    
+    t.equal(e.code, 'Z_DATA_ERROR');
     t.end();
 });
 
