@@ -25,7 +25,7 @@ const test = require('supertape');
 
 const random = Math.random();
 
-test('empty buffer | write file', async (t) => {
+test('empty buffer | write file: error directory', async (t) => {
     const inStream = new Readable({
         read() {},
     });
@@ -129,16 +129,18 @@ test('file1 | file2: write open EACESS: big file', (t) => {
     });
 });
 
-test('file1 | file2: read open ENOENT', (t) => {
+test('file1 | file2: read open ENOENT', async (t) => {
     const tmp = os.tmpdir();
     const name = path.basename(__filename);
     const nameTmp = path.join(tmp, name + random);
     
-    tryPipe(__filename + random, nameTmp, (error) => {
-        t.ok(error, error && error.message);
-        
-        t.end();
-    });
+    const read = fs.createReadStream(__filename + random);
+    const write = fs.createWriteStream(nameTmp);
+    
+    const [error] = await tryToCatch(_pipe, [read, write]);
+    t.ok(error, error && error.message);
+    
+    t.end();
 });
 
 test('file1 | file2: error read EISDIR', (t) => {
@@ -319,6 +321,15 @@ test('put file', (t) => {
         
         req.end();
     });
+});
+
+test('read file| through| write directory: error', async (t) => {
+    const transform = through2((chunk, enc, cb) => cb(null, chunk));
+    const [e] = await tryToCatch(_pipe, [fs.createReadStream('/sdlfj'), transform, fs.createWriteStream('/dsfsdf')]);
+    //const [e] = await tryToCatch(_pipe, [fs.createReadStream('/sdlfj'), fs.createWriteStream('/dsfsdf')]);
+    
+    t.equal(e.code, 'EACCES', 'should equal');
+    t.end();
 });
 
 test('put file | unzip', (t) => {
