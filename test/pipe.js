@@ -56,7 +56,7 @@ test('file1 | gunzip maybe: error', async (t) => {
     t.end();
 });
 
-test('', async (t) => {
+test('file | unzip | untar', async (t) => {
     const name = __dirname + '/fixture/broken.tar.gz';
     const streamFile = fs.createReadStream(name);
     const streamUnzip = gunzip();
