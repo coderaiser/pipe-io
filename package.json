@@ -30,7 +30,7 @@
   "main": "lib/pipe.js",
   "devDependencies": {
     "coveralls": "^3.0.0",
-    "eslint": "^6.4.0",
+    "eslint": "^7.3.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-putout": "^3.5.0",
     "gunzip-maybe": "^1.4.1",
