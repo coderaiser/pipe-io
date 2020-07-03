@@ -43,7 +43,7 @@
     "supertape": "^1.2.3",
     "tar-fs": "^2.0.0",
     "tar-stream": "^2.1.0",
-    "through2": "^3.0.0",
+    "through2": "^4.0.2",
     "try-to-catch": "^3.0.0"
   }
 }
