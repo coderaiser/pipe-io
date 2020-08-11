@@ -328,30 +328,26 @@ test('put file | unzip', async (t) => {
     t.end();
 });
 
-test('file1, file2 | response: end false', async (t) => {
-    const server = http.createServer((req, res) => {
+test('file1, file2 | options: end: false', async (t) => {
+    const server = http.createServer(async (req, res) => {
         const read1 = fs.createReadStream(__filename);
         const read2 = fs.createReadStream(__filename);
         
-        pipe([read1, res], {
+        await pipe([read1, res], {
             end: false,
-        }, () => {
-            pipe([read2, res], (error) => {
-                t.notOk(error, 'file1, file2 -> response');
-            });
         });
+        await pipe([read2, res]);
     });
     
     server.listen(() => {
         const {port} = server.address();
-        
         const url = `http://127.0.0.1:${port}`;
         
         http.get(url, (res) => {
             pullout(res).then((data) => {
                 const file = fs.readFileSync(__filename, 'utf8');
                 server.close();
-                t.equal(data.length, file.length * 2, 'reponse == file1 + file2');
+                t.equal(data.length, file.length * 2, 'reponse == file');
                 t.end();
             });
         }).on('error', (error) => {
@@ -361,6 +357,7 @@ test('file1, file2 | response: end false', async (t) => {
     });
     
     const [error] = await once(server, 'error');
+    
     t.ok(error, error.message);
     t.end();
 });
@@ -371,16 +368,20 @@ test('file1, file2 | options: empty object', async (t) => {
         const read2 = fs.createReadStream(__filename);
         
         await pipe([read1, res]);
-        await pipe([read2, res]);
+        
+        const [e] = await tryToCatch(pipe, [read2, res], {});
+        
+        t.equal(e.message, 'write after end');
+        t.end();
     });
     
-    server.listen(7331, '127.0.0.1', () => {
-        http.get('http://127.0.0.1:7331', (res) => {
-            pullout(res).then((data) => {
-                const file = fs.readFileSync(__filename, 'utf8');
+    server.listen(() => {
+        const {port} = server.address();
+        const url = `http://127.0.0.1:${port}`;
+        
+        http.get(url, (res) => {
+            pullout(res).then(() => {
                 server.close();
-                t.equal(data.length, file.length, 'reponse == file');
-                t.end();
             });
         }).on('error', (error) => {
             t.ok(error, error.message);
@@ -389,6 +390,7 @@ test('file1, file2 | options: empty object', async (t) => {
     });
     
     const [error] = await once(server, 'error');
+    
     t.ok(error, error.message);
     t.end();
 });
