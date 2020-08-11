@@ -12,6 +12,12 @@
     "type": "git",
     "url": "git://github.com/coderaiser/pipe-io.git"
   },
+  "nyc": {
+    "exclude": [
+      "test",
+      ".*.js"
+    ]
+  },
   "scripts": {
     "test": "madrun test",
     "fix:lint": "madrun fix:lint",

@@ -366,13 +366,12 @@ test('file1, file2 | response: end false', async (t) => {
 });
 
 test('file1, file2 | options: empty object', async (t) => {
-    const server = http.createServer((req, res) => {
+    const server = http.createServer(async (req, res) => {
         const read1 = fs.createReadStream(__filename);
         const read2 = fs.createReadStream(__filename);
         
-        pipe([read1, res], {}, () => {
-            pipe([read2, res], () => {});
-        });
+        await pipe([read1, res]);
+        await pipe([read2, res]);
     });
     
     server.listen(7331, '127.0.0.1', () => {
