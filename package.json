@@ -12,12 +12,6 @@
     "type": "git",
     "url": "git://github.com/coderaiser/pipe-io.git"
   },
-  "nyc": {
-    "exclude": [
-      "test",
-      ".*.js"
-    ]
-  },
   "scripts": {
     "test": "madrun test",
     "fix:lint": "madrun fix:lint",
@@ -35,6 +29,7 @@
   },
   "main": "lib/pipe.js",
   "devDependencies": {
+    "@babel/eslint-parser": "^7.12.1",
     "coveralls": "^3.0.0",
     "eslint": "^7.3.1",
     "eslint-plugin-node": "^11.1.0",

@@ -1,14 +1,18 @@
 {
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+        "requireConfigFile": false
+    },
     "overrides": [{
-        "files": ["madrun.js", "test/**"],
+        "files": [".*.js", "test/**"],
         "rules": {
             "node/no-unsupported-features/es-syntax": "off",
             "node/no-unsupported-features/node-builtins": "off"
         }
     }],
     "extends": [
-        "plugin:putout/recommended",
-        "plugin:node/recommended"
+        "plugin:node/recommended",
+        "plugin:putout/recommended"
     ],
     "plugins": [
         "putout",

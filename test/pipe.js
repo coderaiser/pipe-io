@@ -110,7 +110,7 @@ test('file1 | file2: write open EACESS', async (t) => {
     
     const [error] = await tryPipe(__filename, nameTmp);
     
-    t.ok(error, error && error.message);
+    t.ok(error, error?.message);
     t.end();
 });
 
@@ -120,7 +120,7 @@ test('file1 | file2: write open EACESS: big file', async (t) => {
     
     const [error] = await tryPipe('/bin/bash', nameTmp);
     
-    t.ok(error, error && error.message);
+    t.ok(error, error?.message);
     t.end();
 });
 
@@ -133,7 +133,7 @@ test('file1 | file2: read open ENOENT', async (t) => {
     const write = fs.createWriteStream(nameTmp);
     
     const [error] = await tryToCatch(pipe, [read, write]);
-    t.ok(error, error && error.message);
+    t.ok(error, error?.message);
     
     t.end();
 });
