@@ -47,7 +47,7 @@
     "pump": "^3.0.0",
     "putout": "^9.1.0",
     "serve-once": "^2.0.0",
-    "supertape": "^2.0.1",
+    "supertape": "^4.4.0",
     "tar-fs": "^2.0.0",
     "tar-stream": "^2.1.0",
     "through2": "^4.0.2",
