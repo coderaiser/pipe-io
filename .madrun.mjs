@@ -1,15 +1,13 @@
-'use strict';
+import {run} from 'madrun';
 
-const {run} = require('madrun');
-
-module.exports = {
+export default {
     'test': () => 'tape test/*.js',
     'fix:lint': () => run('lint', '--fix'),
     'lint': () => 'putout .',
     'fresh:lint': () => run('lint', '--fresh'),
     'lint:fresh': () => run('lint', '--fresh'),
     'lint:test': () => 'putout -c .putoutrc.test test',
-    'watch:test': () => run('watcher', '"npm test"'),
+    'watch:test': async () => await run('watcher', await run('test')),
     'watcher': () => 'nodemon -w lib -w test -x',
     'coverage': () => 'nyc npm test',
     'report': () => 'nyc report --reporter=text-lcov | coveralls',
