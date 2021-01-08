@@ -2,16 +2,15 @@
 
 const {once} = require('events');
 
+const {readFile} = require('fs/promises');
 const fs = require('fs');
 const path = require('path');
-const http = require('http');
 const os = require('os');
 const zlib = require('zlib');
 const {Readable} = require('stream');
 
 const tar = require('tar-fs');
 const gunzip = require('gunzip-maybe');
-const pullout = require('pullout');
 const tryToCatch = require('try-to-catch');
 const tarStream = require('tar-stream');
 const through2 = require('through2');
@@ -329,69 +328,41 @@ test('put file | unzip', async (t) => {
 });
 
 test('file1, file2 | options: end: false', async (t) => {
-    const server = http.createServer(async (req, res) => {
+    const middleware = () => async (req, res) => {
         const read1 = fs.createReadStream(__filename);
         const read2 = fs.createReadStream(__filename);
         
         await pipe([read1, res], {
             end: false,
         });
-        await pipe([read2, res]);
-    });
-    
-    server.listen(() => {
-        const {port} = server.address();
-        const url = `http://127.0.0.1:${port}`;
         
-        http.get(url, (res) => {
-            pullout(res).then((data) => {
-                const file = fs.readFileSync(__filename, 'utf8');
-                server.close();
-                t.equal(data.length, file.length * 2, 'reponse == file');
-                t.end();
-            });
-        }).on('error', (error) => {
-            t.ok(error, error.message);
-            t.end();
-        });
-    });
+        await pipe([read2, res]);
+    };
     
-    const [error] = await once(server, 'error');
+    const {request} = serveOnce(middleware);
+    const {body} = await request.get('/');
     
-    t.ok(error, error.message);
+    const {length} = await readFile(__filename);
+    
+    t.equal(body.length, length * 2, 'reponse == file * 2');
     t.end();
 });
 
 test('file1, file2 | options: empty object', async (t) => {
-    const server = http.createServer(async (req, res) => {
+    const middleware = () => async (req, res) => {
         const read1 = fs.createReadStream(__filename);
         const read2 = fs.createReadStream(__filename);
         
         await pipe([read1, res]);
-        
-        const [e] = await tryToCatch(pipe, [read2, res], {});
-        
-        t.equal(e.message, 'write after end');
-        t.end();
-    });
+        await pipe([read2, res], {});
+    };
     
-    server.listen(() => {
-        const {port} = server.address();
-        const url = `http://127.0.0.1:${port}`;
-        
-        http.get(url, (res) => {
-            pullout(res).then(() => {
-                server.close();
-            });
-        }).on('error', (error) => {
-            t.ok(error, error.message);
-            t.end();
-        });
-    });
+    const {request} = serveOnce(middleware);
+    const {body} = await request.get('/');
     
-    const [error] = await once(server, 'error');
+    const {length} = await readFile(__filename);
     
-    t.ok(error, error.message);
+    t.equal(body.length, length, 'reponse == file');
     t.end();
 });
 
