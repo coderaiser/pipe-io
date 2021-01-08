@@ -288,16 +288,16 @@ test('tar | gzip | file: error: EACESS', async (t) => {
 test('put file', async (t) => {
     const middleware = () => async (req, res) => {
         const write = fs.createWriteStream('/xxxxxxx');
-        await pipe([req, write]);
+        const [error] = await tryToCatch(pipe, [req, write]);
         
-        res.end();
+        res.end(error.message);
     };
     
     const {request} = serveOnce(middleware);
     
-    await request.put('/');
+    const {body} = await request.get('/');
     
-    t.pass('should not crash');
+    t.equal(body, `EACCES: permission denied, open '/xxxxxxx'`);
     t.end();
 });
 
@@ -314,16 +314,15 @@ test('put file | unzip', async (t) => {
         const gunzip = zlib.createGunzip();
         const transform = through2((chunk, enc, cb) => cb(null, chunk));
         
-        await pipe([req, gunzip, transform]);
+        const [e] = await tryToCatch(pipe, [req, gunzip, transform]);
         
-        res.end();
+        res.end(e.message);
     };
     
     const {request} = serveOnce(middleware);
+    const {body} = await request.get('/');
     
-    await request.put('/');
-    
-    t.pass('should not crash');
+    t.equal(body, 'unexpected end of file');
     t.end();
 });
 
