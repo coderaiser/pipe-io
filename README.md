@@ -8,9 +8,8 @@ Pipe [streams](https://github.com/substack/stream-handbook) and handle events.
 npm i pipe-io
 ```
 
-## API
+## `pipe`
 
-### pipe
 Create pipe between streams and adds callback wich would 
 be called once whenever everything is done, or error occures.
 
